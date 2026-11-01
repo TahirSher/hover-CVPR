@@ -28,6 +28,7 @@ when its predicted contribution to F1×IoU exceeds a closed-form threshold.
 
 | File | Contents |
 |---|---|
+| `main_run_outputs.zip` | The main run of paper Tab. 1: per-clip predictions of HOVER (all refine modes and the four ablation variants), the vanilla baseline and the GliDe re-run (`runs/<backbone>/`), development-split tuning outputs (`params/<backbone>/calibration_<mode>.json`, probe), and evaluation reports (`eval/`). These are the files `runs.json` points to. |
 | `revision_results.zip` | CSVs of all revision analyses on the main run (controls, ablation, post-hoc, re-judging, probe, repairs, segmentation grid, decomposition, medoid candidates). Identical to `data/revision/` in the paper zip. |
 | `CVPR-HOVER-publication_results.zip` | Per-backbone main results and paired statistical comparisons for every refine mode (whole, window, frame), and the all-modes summary. |
 | `all_backbones_timing.csv` | Inference time per clip of HOVER, the GliDe re-run and the vanilla baseline on 100 test clips for all five backbones (paper Tab. 7). |
@@ -48,8 +49,8 @@ and the LaTeX source of the figure.
 ## Reproducing the revision analyses
 
 1. Put `HOVER.py`, `hover_revision.py`, `runs.json` and the helper scripts in one folder, and point
-   `runs.json` at your VideoGlitchBench root, ground truth and main-run output files.
-   The main-run per-clip outputs are not in this repository.
+   `runs.json` at your VideoGlitchBench root and ground truth, and at the files of
+   `main_run_outputs.zip` (`runs/` and `params/`).
 2. Serve the judge (`meta-llama/Llama-3.1-8B-Instruct`, temperature 0.3) on port 8020 with vLLM.
 3. Run `./run_revision_main.sh`. Results go to `revision_results/`. Then run
    `python medoid_candidates.py --runs runs.json --out revision_results`.
