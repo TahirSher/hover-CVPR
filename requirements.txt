@@ -1,0 +1,7 @@
+# Python environment used for HOVER.py and the revision scripts (Python 3.12.9).
+# Models are served with vLLM 0.8.5 (docker image vllm/vllm-openai:v0.8.5.post1); see start_detector.sh.
+numpy==2.2.6
+scipy==1.18.1
+opencv-python==5.0.0
+Pillow==12.3.0
+requests==2.34.2

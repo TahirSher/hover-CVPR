@@ -23,6 +23,10 @@ when its predicted contribution to F1×IoU exceeds a closed-form threshold.
 | `run_revision_main.sh` | Driver: for each backbone, starts the detector, runs controls, post-hoc, segmentation grid, probe and ablations, then the decomposition. |
 | `start_detector.sh` | Starts the vLLM server (docker `vllm/vllm-openai:v0.8.5.post1`) for one backbone with the main-run flags. Set the GPU device and Hugging Face cache path for your machine. |
 | `warm_gather.py`, `warm_emission.py` | Fill the VLM cache in parallel for the ablation variants and for the GliDe emission-rule control, so the sequential analysis passes read cached calls. They do not change any result. |
+| `make_profile_examples_main.py` | Rebuilds `data/profile_examples_qwen7b.json` of the paper sources (verification profiles, Supp. Fig. S9) from the main run. |
+| `internvl_chat_template.jinja` | Chat template passed to vLLM for the InternVL2.5 backbones (`start_detector.sh` mounts it as `/tpl`). |
+| `REVISION_RUN.md` | Step-by-step recipe for the revision analyses: commands, options, outputs and which paper sentences depend on them. |
+| `requirements.txt` | Python package versions used (Python 3.12.9); models are served with vLLM 0.8.5. |
 
 ## Results
 
@@ -34,6 +38,20 @@ when its predicted contribution to F1×IoU exceeds a closed-form threshold.
 | `all_backbones_timing.csv` | Inference time per clip of HOVER, the GliDe re-run and the vanilla baseline on 100 test clips for all five backbones (paper Tab. 7). |
 | `videoglitchbench.zip` | Per-clip predictions and tuned parameters from the second complete run used to measure run-to-run variation (Supp. Tab. S10), including the ablation variants. HOVER's files there carry the prefix `crux_`. |
 | `HOVER_UAL_Bench.zip` | Outputs of the transfer study on UAL-Bench (UAG-OOPS, UAG-FunQA, UAG-SSBD) for three backbones. |
+
+## Splits and caches
+
+| File | Contents |
+|---|---|
+| `splits/` | The game-disjoint VideoGlitchBench splits used throughout: `train.json` (96 games), `dev.json` (445 clips, 12 games), `test.json` (383 clips, 12 games) and `game_assignments.json`. Place them in `<VideoGlitchBench root>/splits/`. |
+| `caches/judge_cache.tar.gz` | Every Llama-3.1-8B-Instruct judge rating behind the reported numbers, including the three re-judgings (`__repeat1..3`). Keys depend only on the judge model, temperature, prompt and the two descriptions, so extracting it in `<root>/HOVER_v8_work/` makes every evaluation reproduce exactly without re-sampling the judge (temperature 0.3). |
+| `caches/vlm_cache_<backbone>.tar.gz` | The raw response of every VLM call of the main run and the revision analyses, one JSON per call. Keys include the absolute path, size and modification time of each window image, so they act as a cache only on the original machine; elsewhere they are a complete record of model outputs. |
+
+## Data not included
+
+The VideoGlitchBench videos (`raw/`), `annotations.json` and the official `groundtruth.json` used by
+the evaluator are third-party files and are not redistributed here; obtain them from the
+VideoGlitchBench / GliDe release and put them in the VideoGlitchBench root that `runs.json` points to.
 
 ## Qualitative figures
 
@@ -48,8 +66,10 @@ and the LaTeX source of the figure.
 
 ## Reproducing the revision analyses
 
-1. Put `HOVER.py`, `hover_revision.py`, `runs.json` and the helper scripts in one folder, and point
-   `runs.json` at your VideoGlitchBench root and ground truth, and at the files of
+1. Install `requirements.txt`. Put `HOVER.py`, `hover_revision.py`, `runs.json` and the helper
+   scripts in one folder. Set up the VideoGlitchBench root (videos, `annotations.json`,
+   `groundtruth.json`, `splits/` from this repository), extract `caches/judge_cache.tar.gz` in
+   `<root>/HOVER_v8_work/`, and point `runs.json` at that root, the ground truth and the files of
    `main_run_outputs.zip` (`runs/` and `params/`).
 2. Serve the judge (`meta-llama/Llama-3.1-8B-Instruct`, temperature 0.3) on port 8020 with vLLM.
 3. Run `./run_revision_main.sh`. Results go to `revision_results/`. Then run
@@ -57,4 +77,7 @@ and the LaTeX source of the figure.
 4. Copy `revision_results/*.csv` to `data/revision/` in the paper sources and follow the build order
    in the paper zip's `README.md`.
 
-VLM and judge calls are cached by `HOVER.py`, so a re-run with the same caches reproduces every number.
+With the judge cache in place, every score computed from existing outputs reproduces exactly. Steps
+that call the VLM again (ablation re-runs, the GliDe emission-rule control, the probe) need the
+backbone served as in `start_detector.sh`, and batched decoding can make their outputs differ slightly
+from ours (Supp. Tab. S10 bounds run-to-run variation).
