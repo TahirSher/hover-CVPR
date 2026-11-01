@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rebuild data/profile_examples_qwen7b.json (Supp. Fig. S9) from the MAIN run of Qwen2.5-VL-7B."""
 import json, sys
-R = "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10"
+R = "/path/to/VideoGlitchBench/HOVER_v8_work/v10"
 run = json.load(open(f"{R}/runs/qwen2.5-vl-7b/HOVER_window_test.json"))
 cal = json.load(open(f"{R}/params/qwen2.5-vl-7b/calibration_window.json"))
 old = json.load(open(sys.argv[1]))

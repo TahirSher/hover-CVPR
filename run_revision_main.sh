@@ -2,8 +2,8 @@
 # Revision analyses paired with the MAIN run (Tab. 1). Per backbone: the cheap steps and sharded
 # cache warm-ups of the four ablation variants run as parallel clients of one detector; then the
 # ablation variants (in parallel) and the final 'ablate' pass, which read the caches.
-cd /home/tahir/VLM-CVPR
-PY=/home/tahir/miniconda3/envs/mga/bin/python
+cd "$(dirname "$0")"
+PY=python
 OUT=revision_results
 NSH=${NSH:-3}
 VARS=(no_ctx_calib no_hypothesis_scoring no_event_resolution no_utility_selection)

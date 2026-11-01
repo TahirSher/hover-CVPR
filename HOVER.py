@@ -73,16 +73,16 @@ VLM verifies hypotheses better than it detects glitches is exactly what
 
 Commands
 --------
-  python HOVER_v10.py selftest [--glide_repo /path/to/GliDe]
-  python HOVER_v10.py diagnose  --split dev --limit 72     # generic detector only (cached)
-  python HOVER_v10.py probe     --split dev --limit 72     # v10 go/no-go (no judge needed)
-  python HOVER_v10.py calibrate --calib_splits dev         # needs the judge server
-  python HOVER_v10.py run       --method HOVER    --split test
-  python HOVER_v10.py run       --method vanilla --split test
-  python HOVER_v10.py import_glide --batch_report /path/batch_report.json --split test
-  python HOVER_v10.py export    --run_file <runs/..../HOVER_test.json>
-  python HOVER_v10.py evaluate  --split test --run_files HOVER_test.json glide_official_test.json
-  python HOVER_v10.py ablate    --split test
+  python HOVER.py selftest [--glide_repo /path/to/GliDe]
+  python HOVER.py diagnose  --split dev --limit 72     # generic detector only (cached)
+  python HOVER.py probe     --split dev --limit 72     # v10 go/no-go (no judge needed)
+  python HOVER.py calibrate --calib_splits dev         # needs the judge server
+  python HOVER.py run       --method HOVER    --split test
+  python HOVER.py run       --method vanilla --split test
+  python HOVER.py import_glide --batch_report /path/batch_report.json --split test
+  python HOVER.py export    --run_file <runs/..../HOVER_test.json>
+  python HOVER.py evaluate  --split test --run_files HOVER_test.json glide_official_test.json
+  python HOVER.py ablate    --split test
 
 --limit always samples round-robin over games (--no-stratify_limit disables it).
 
@@ -91,12 +91,12 @@ Fair-comparison recipe (same backbone, same server, same judge, same videos)
   2. official GliDe, unmodified:
        cd GliDe && python run.py --video-dir <root>/raw --api-base http://localhost:8000/v1 \\
                                  --model Qwen/Qwen2.5-VL-7B-Instruct
-  3. python HOVER_v10.py import_glide --split test --batch_report GliDe/data/results/batch_report.json
-  4. python HOVER_v10.py probe --split dev --limit 72     (stop if the verdict is NO-GO)
+  3. python HOVER.py import_glide --split test --batch_report GliDe/data/results/batch_report.json
+  4. python HOVER.py probe --split dev --limit 72     (stop if the verdict is NO-GO)
   5. vllm serve meta-llama/Llama-3.1-8B-Instruct --port 8001
-  6. python HOVER_v10.py calibrate --calib_splits dev
-  7. python HOVER_v10.py run --method HOVER --split test ; run --method vanilla --split test
-  8. python HOVER_v10.py evaluate --split test --gt_json <official groundtruth.json> \\
+  6. python HOVER.py calibrate --calib_splits dev
+  7. python HOVER.py run --method HOVER --split test ; run --method vanilla --split test
+  8. python HOVER.py evaluate --split test --gt_json <official groundtruth.json> \\
        --run_files HOVER_test.json glide_official_test.json vanilla_test.json
      (first file = reference; evaluation uses the intersection of video sets)
 
@@ -116,14 +116,14 @@ i.e. one interval; frame refinement), H and U are not used. It is not an
 evaluation of the full open-ended H -> V -> S -> U pipeline.
 Only Qwen2.5-VL-7B-Instruct, InternVL2.5-8B and UI-TARS-1.5-7B are allowed.
 
-  python HOVER_v10.py selftest_ual [--ual_repo /path/UAL_Bench]
-  python HOVER_v10.py inspect_ual  --ual_root /path/UAL_Bench --ual_dataset all
-  python HOVER_v10.py run_ual      --ual_root /path/UAL_Bench --ual_dataset uag_oops \\
+  python HOVER.py selftest_ual [--ual_repo /path/UAL_Bench]
+  python HOVER.py inspect_ual  --ual_root /path/UAL_Bench --ual_dataset all
+  python HOVER.py run_ual      --ual_root /path/UAL_Bench --ual_dataset uag_oops \\
                                   --backbone qwen2.5-vl-7b --limit 1          # smoke test
-  python HOVER_v10.py run_ual      --ual_root /path/UAL_Bench --ual_dataset all --backbone all \\
+  python HOVER.py run_ual      --ual_root /path/UAL_Bench --ual_dataset all --backbone all \\
       --ual_api_bases qwen2.5-vl-7b=http://localhost:8000/v1,internvl2.5-8b=http://localhost:8002/v1,ui-tars-1.5-7b=http://localhost:8003/v1
-  python HOVER_v10.py evaluate_ual --ual_root /path/UAL_Bench --ual_dataset all --backbone all
-  python HOVER_v10.py evaluate_ual --ual_predictions predictions_official.json [--ual_repo ...]
+  python HOVER.py evaluate_ual --ual_root /path/UAL_Bench --ual_dataset all --backbone all
+  python HOVER.py evaluate_ual --ual_predictions predictions_official.json [--ual_repo ...]
 
 Outputs go to <parent of --ual_root>/HOVER_v10_ual_work/ual_bench/ (or
 --ual_work_root), never into the VideoGlitchBench root, HOVER_v8_work, the GliDe
@@ -191,7 +191,7 @@ STOPWORDS = {"the", "a", "an", "is", "are", "of", "in", "on", "and", "or", "to",
 @dataclass
 class Config:
     # ---- paths ---------------------------------------------------------------
-    root: str = "/home/tahir/VLM-Project/VideoGlitchBench"
+    root: str = "/path/to/VideoGlitchBench"
     raw_subdir: str = "raw"
     splits_subdir: str = "splits"
     work_subdir: str = "HOVER_v8_work"   # shared with v8/v9: windows and VLM caches are reused

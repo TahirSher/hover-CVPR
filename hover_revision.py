@@ -29,7 +29,7 @@ Usage (see REVISION_RUN.md for the full recipe):
   (subcommands: controls posthoc decompose ablate seg_grid rejudge probe all)
 
 runs.json maps every backbone to the files of the MAIN run, e.g.
-  {"root": "/home/tahir/VLM-Project/VideoGlitchBench",
+  {"root": "/path/to/VideoGlitchBench",
    "gt_json": "/path/to/groundtruth.json",
    "judge_api_base": "http://localhost:8001/v1",
    "backbones": {

@@ -16,7 +16,7 @@ when its predicted contribution to F1×IoU exceeds a closed-form threshold.
 
 | File | Contents |
 |---|---|
-| `HOVER.py` | The full pipeline: preprocessing, HOVER, the vanilla baseline, a converter for GliDe outputs, a port of the official VideoGlitchBench evaluator (Llama-3.1-8B-Instruct judge), development-split tuning, statistics and the UAL-Bench extension. |
+| `HOVER.py` | The full pipeline: preprocessing, HOVER, the vanilla baseline, a converter for GliDe outputs, a port of the official VideoGlitchBench evaluator (Llama-3.1-8B-Instruct judge), development-split tuning, statistics, the UAL-Bench extension, and unit tests (`python HOVER.py selftest`: exactness of the segmentation program, the F\*/2 property, validity of the tests on synthetic data). |
 | `hover_revision.py` | Every revision analysis, paired with the main run (paper Tab. 1): controls on GliDe's outputs, vanilla and fixed-sentence baselines, five-backbone ablations, emission rule × span resolution, re-judging, window probe, segmentation grid and decomposition. Imports `HOVER.py` from the same folder. |
 | `medoid_candidates.py` | Scores the 40 short-listed development descriptions as fixed whole-clip predictions and adds the TF-IDF medoid to the fixed-sentence controls (Supp. Tab. S11). |
 | `runs.json` | Paths of the main-run output files per backbone, the refine mode chosen on the development split, and the vLLM endpoints. Edit the paths for your machine. |
@@ -25,7 +25,7 @@ when its predicted contribution to F1×IoU exceeds a closed-form threshold.
 | `warm_gather.py`, `warm_emission.py` | Fill the VLM cache in parallel for the ablation variants and for the GliDe emission-rule control, so the sequential analysis passes read cached calls. They do not change any result. |
 | `make_profile_examples_main.py` | Rebuilds `data/profile_examples_qwen7b.json` of the paper sources (verification profiles, Supp. Fig. S9) from the main run. |
 | `internvl_chat_template.jinja` | Chat template passed to vLLM for the InternVL2.5 backbones (`start_detector.sh` mounts it as `/tpl`). |
-| `REVISION_RUN.md` | Step-by-step recipe for the revision analyses: commands, options, outputs and which paper sentences depend on them. |
+| `REPRODUCE.md` | Step-by-step reproduction in the order of Supp. Sec. S9: unit tests, main pipeline, controls/ablations/re-judging/probe, tables and figures. |
 | `requirements.txt` | Python package versions used (Python 3.12.9); models are served with vLLM 0.8.5. |
 
 ## Results
@@ -64,20 +64,15 @@ VideoGlitchBench / GliDe release and put them in the VideoGlitchBench root that 
 Each of these holds the rendered figures (PDF and PNG) and a `_latex/` folder with the extracted frames
 and the LaTeX source of the figure.
 
-## Reproducing the revision analyses
+## Quick start
 
-1. Install `requirements.txt`. Put `HOVER.py`, `hover_revision.py`, `runs.json` and the helper
-   scripts in one folder. Set up the VideoGlitchBench root (videos, `annotations.json`,
-   `groundtruth.json`, `splits/` from this repository), extract `caches/judge_cache.tar.gz` in
-   `<root>/HOVER_v8_work/`, and point `runs.json` at that root, the ground truth and the files of
-   `main_run_outputs.zip` (`runs/` and `params/`).
-2. Serve the judge (`meta-llama/Llama-3.1-8B-Instruct`, temperature 0.3) on port 8020 with vLLM.
-3. Run `./run_revision_main.sh`. Results go to `revision_results/`. Then run
-   `python medoid_candidates.py --runs runs.json --out revision_results`.
-4. Copy `revision_results/*.csv` to `data/revision/` in the paper sources and follow the build order
-   in the paper zip's `README.md`.
+```bash
+pip install -r requirements.txt
+python HOVER.py selftest            # 59 unit checks, no GPU or servers needed
+python hover_revision.py selftest   # 10 checks of the revision analyses
+```
 
-With the judge cache in place, every score computed from existing outputs reproduces exactly. Steps
-that call the VLM again (ablation re-runs, the GliDe emission-rule control, the probe) need the
-backbone served as in `start_detector.sh`, and batched decoding can make their outputs differ slightly
+Then follow `REPRODUCE.md`. Scores computed from the released outputs with the released judge
+cache reproduce exactly. Steps that call the VLM again (ablation re-runs, the GliDe emission-rule
+control, the probe) need the backbone served as in `start_detector.sh` and can differ slightly
 from ours (Supp. Tab. S10 bounds run-to-run variation).
