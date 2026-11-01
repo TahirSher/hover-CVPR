@@ -1,0 +1,48 @@
+{
+ "root": "/home/tahir/VLM-Project/VideoGlitchBench",
+ "gt_json": "/home/tahir/VLM-Project/VideoGlitchBench/groundtruth_gilde.json",
+ "judge_api_base": "http://localhost:8020/v1",
+ "judge_model": "meta-llama/Llama-3.1-8B-Instruct",
+ "backbones": {
+  "qwen2.5-vl-3b": {
+   "hover": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-3b/HOVER_whole_test.json",
+   "glide": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-3b/glide_official_test.json",
+   "vanilla": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-3b/vanilla_test.json",
+   "calibration": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/params/qwen2.5-vl-3b/calibration_whole.json",
+   "mode": "whole",
+   "api_base": "http://localhost:8010/v1"
+  },
+  "qwen2.5-vl-7b": {
+   "hover": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-7b/HOVER_window_test.json",
+   "glide": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-7b/glide_official_test.json",
+   "vanilla": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/qwen2.5-vl-7b/vanilla_test.json",
+   "calibration": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/params/qwen2.5-vl-7b/calibration_window.json",
+   "mode": "window",
+   "api_base": "http://localhost:8010/v1"
+  },
+  "internvl2.5-4b": {
+   "hover": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-4b/HOVER_window_test.json",
+   "glide": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-4b/glide_official_test.json",
+   "vanilla": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-4b/vanilla_test.json",
+   "calibration": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/params/internvl2.5-4b/calibration_window.json",
+   "mode": "window",
+   "api_base": "http://localhost:8010/v1"
+  },
+  "internvl2.5-8b": {
+   "hover": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-8b/HOVER_frame_test.json",
+   "glide": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-8b/glide_official_test.json",
+   "vanilla": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/internvl2.5-8b/vanilla_test.json",
+   "calibration": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/params/internvl2.5-8b/calibration_frame.json",
+   "mode": "frame",
+   "api_base": "http://localhost:8010/v1"
+  },
+  "ui-tars-1.5-7b": {
+   "hover": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/ui-tars-1.5-7b/HOVER_window_test.json",
+   "glide": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/ui-tars-1.5-7b/glide_official_test.json",
+   "vanilla": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/runs/ui-tars-1.5-7b/vanilla_test.json",
+   "calibration": "/home/tahir/VLM-Project/VideoGlitchBench/HOVER_v8_work/v10/params/ui-tars-1.5-7b/calibration_window.json",
+   "mode": "window",
+   "api_base": "http://localhost:8010/v1"
+  }
+ }
+}
