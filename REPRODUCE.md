@@ -71,6 +71,26 @@ with `start_detector.sh` and filling the VLM cache in parallel with `warm_gather
 Options: `--n_bootstrap` (default 2000), `--medoid_shortlist` (default 40), `--game_pool loo|dev`
 (per-game fixed sentence from development and other test clips of the game, or development only).
 
+## 3b. Second and third revisions (`revision2/`)
+
+Edit the paths in `revision2/runs_v2.json`, serve the backbone and judge as above, and run from the
+repository root (outputs go to `revision2/results/`; ours are already there):
+
+```bash
+python revision2/v2_analyses.py --runs runs.json        # matching protocols, detection, subsets
+python revision2/judge_agreement.py                     # needs the Qwen2.5-72B-Instruct-AWQ judge
+python revision2/v3_controls.py                         # shuffled-description and abstention controls
+python revision2/score_glide_clean.py --backbone internvl2.5-8b   # also qwen2.5-vl-3b, ui-tars-1.5-7b
+python revision2/score_full.py                          # full benchmark (all 5,238 clips)
+python revision2/human_agreement.py && python revision2/human_methods.py   # human check
+```
+
+The raw outputs these read (stage H outputs, full-benchmark outputs, clean GliDe re-runs) are in
+`revision2_outputs.zip` (extract it in the repository root; it fills `revision2/h_only`, `revision2/h_full` and
+`revision2/glide_clean`); `caches/judge_cache.tar.gz` holds every rating of both judges, so scoring
+reproduces our CSVs exactly. Copy `revision2/results/*.csv` to `paper/data/v2/` and run
+`scripts/make_v2_tables.py` of the paper sources to rebuild the tables.
+
 ## 4. Tables and figures
 
 `HOVER_CVPR2027_revised.zip` contains the paper sources with the data every number is read from

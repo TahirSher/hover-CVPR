@@ -1,0 +1,5 @@
+backbone,mode,method,n_videos,num_pred_bugs,num_matched,mean_score,precision,recall,f1,iou_r,mean_iou,f1_iou,reports_per_clip,clips_multi,calls_per_clip
+qwen3-vl-8b,frame,hover,383,374,300,3.83,0.614439,0.707077,0.657511,0.489803,0.486283,0.322051,0.976501,0,56.7781
+qwen3-vl-8b,frame,hover_whole,383,374,300,3.83,0.614439,0.707077,0.657511,0.485414,0.482392,0.319165,0.976501,0,56.7781
+qwen3-vl-8b,frame,top1_whole,383,383,307,3.78502,0.606789,0.715077,0.656497,0.485034,0.48153,0.318424,1,0,56.7781
+qwen3-vl-8b,frame,vanilla,383,51,20,3.6,0.282353,0.0443077,0.0765957,0.313062,0.282756,0.0239792,0.133159,15,1.00261

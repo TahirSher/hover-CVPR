@@ -1,0 +1,4 @@
+backbone,tag,ref,var,f1_iou_ref,f1_iou_var,delta_ref_minus,ci_lo,ci_hi,p
+qwen3-vl-8b,new_backbone,hover,vanilla,0.322051,0.0239792,0.298072,0.269,0.33231,0.000488281
+qwen3-vl-8b,new_backbone,hover,top1_whole,0.322051,0.318424,0.00362714,-0.00231453,0.0091235,0.247559
+qwen3-vl-8b,new_backbone,hover,hover_whole,0.322051,0.319165,0.00288615,-0.0023106,0.00770491,0.276367

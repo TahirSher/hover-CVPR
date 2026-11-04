@@ -1,0 +1,14 @@
+backbone,tag,ref,var,f1_iou_ref,f1_iou_var,delta_ref_minus,ci_lo,ci_hi,p
+internvl2.5-4b,vs_hover,hover,top1_whole_orig,0.272861,0.27314,-0.000278428,-0.00135942,0.000553476,0.75
+internvl2.5-8b,vs_hover,hover,top1_whole_glide,0.283933,0.252443,0.0314902,0.0121861,0.0510919,0.0107422
+internvl2.5-8b,definition,top1_whole_orig,top1_whole_glide,0.291294,0.252443,0.0388511,0.0240532,0.0549959,0.000488281
+internvl2.5-8b,vs_hover,hover,top1_whole_neutral,0.283933,0.252863,0.0310697,0.00682072,0.0543329,0.0302734
+internvl2.5-8b,definition,top1_whole_orig,top1_whole_neutral,0.291294,0.252863,0.0384306,0.0206858,0.0562328,0.00244141
+internvl2.5-8b,vs_hover,hover,top1_whole_orig,0.283933,0.291294,-0.00736092,-0.0164261,-0.000163452,0.131348
+qwen2.5-vl-3b,vs_hover,hover,top1_whole_orig,0.306987,0.30808,-0.00109217,-0.00491645,0.0015187,0.71875
+qwen2.5-vl-7b,vs_hover,hover,top1_whole_glide,0.225952,0.198745,0.0272068,0.0090453,0.0434929,0.019043
+qwen2.5-vl-7b,definition,top1_whole_orig,top1_whole_glide,0.224458,0.198745,0.0257134,0.00522814,0.0450283,0.0361328
+qwen2.5-vl-7b,vs_hover,hover,top1_whole_neutral,0.225952,0.217159,0.00879264,-0.00289961,0.0196768,0.167969
+qwen2.5-vl-7b,definition,top1_whole_orig,top1_whole_neutral,0.224458,0.217159,0.00729932,-0.00342798,0.0186959,0.250977
+qwen2.5-vl-7b,vs_hover,hover,top1_whole_orig,0.225952,0.224458,0.00149333,-0.00603357,0.0100337,0.737305
+ui-tars-1.5-7b,vs_hover,hover,top1_whole_orig,0.249384,0.248489,0.000894404,-0.00576387,0.00815306,0.80957

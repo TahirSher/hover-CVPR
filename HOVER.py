@@ -174,6 +174,9 @@ BACKBONES: Dict[str, Dict[str, str]] = {
     "internvl2.5-4b": {"hf": "OpenGVLab/InternVL2_5-4B", "family": "internvl"},
     "internvl2.5-8b": {"hf": "OpenGVLab/InternVL2_5-8B", "family": "internvl"},
     "ui-tars-1.5-7b": {"hf": "ByteDance-Seed/UI-TARS-1.5-7B", "family": "qwen"},
+    # second revision: a current open model and one of 30B or more (HOVER and vanilla only)
+    "qwen3-vl-8b": {"hf": "Qwen/Qwen3-VL-8B-Instruct", "family": "qwen"},
+    "qwen2.5-vl-32b": {"hf": "Qwen/Qwen2.5-VL-32B-Instruct-AWQ", "family": "qwen"},
 }
 # Hypothesis-level features used by the utility model U (section "U" below).
 HYP_FEATURES = ("support", "rank_inv", "forced", "prior", "prof_max", "prof_top2",

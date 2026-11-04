@@ -1,0 +1,6 @@
+backbone,n_clean,abstain_fpr_clean,abstain_tpr_glitch,forced_share_all
+qwen2.5-vl-3b,76,1,1,0
+qwen2.5-vl-7b,76,0.0394737,0.0912052,0.91906
+internvl2.5-4b,75,1,1,0
+internvl2.5-8b,76,1,1,0
+ui-tars-1.5-7b,76,0.763158,0.788274,0.21671
