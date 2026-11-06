@@ -85,6 +85,7 @@ python revision2/score_full.py                          # full benchmark (all 5,
 python revision2/v4_reviewer.py                         # multi-glitch clips, per-game results (cache only)
 python revision2/v4_split_stats.py --root /path/to/VideoGlitchBench   # are our 24 games representative?
 python revision2/v4_timing_ci.py                        # timing intervals for all backbones (per-clip logs)
+python revision2/v4_timing_paired_stats.py --per_clip revision2/results/v4_timing_paired_per_clip.csv   # same-session timing
 python revision2/human_agreement.py && python revision2/human_methods.py   # human check
 ```
 

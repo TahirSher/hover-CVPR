@@ -1,0 +1,2044 @@
+{
+  "api_base": "http://localhost:8013/v1",
+  "backbone": "qwen2.5-vl-7b",
+  "backend": "openai",
+  "crux_calibration": null,
+  "design": {
+    "concurrency": 1,
+    "disk_cache_read": false,
+    "in_video_memo": true,
+    "order": "cyclic over all method permutations",
+    "prefix_cache_reset_per_run": false,
+    "repeats": 1,
+    "warmup_videos": [
+      "Assassin's Creed III::1v58fm.mp4",
+      "Assetto Corsa::24q362.mp4"
+    ]
+  },
+  "entries": [
+    {
+      "agrees_with_reported_run": null,
+      "calls": 49,
+      "completion_tokens": 6852,
+      "duration": 6.12,
+      "game": "Assassin's Creed II",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 49,
+      "model_s": 81.64012249466032,
+      "n_bugs": 2,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "In a video game scene, a character clad in blue armor suddenly begins to float at a constant height above the ground, defying gravity, while standing on the upper balcony of a building. The character, wielding a sword and shield, transitions from a grounded position to an airborne state without any visible support or propulsion, creating an anomaly where the character appears suspended mid-air, floating upwards in a seemingly impossible manner.",
+          "The character (#18) is wearing blue armor and holding a sword and shield, positioned in front of a large, ornate door with intricate carvings and a metallic handle. The character appears to be stuck in front of the door (#16-#20) and cannot move forward or backward, indicating clipping through the door. The character's posture and gaze suggest an attempt to interact with the door but lack of movement indicates a glitch"
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              1
+            ],
+            [
+              6,
+              7
+            ]
+          ],
+          [
+            [
+              0,
+              5
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 3.0138785652816296,
+      "prompt_tokens": 77810,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 36,
+        "grounder": 8,
+        "scanner": 4,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 61.167179017327726,
+        "grounder": 11.343598159961402,
+        "scanner": 8.1928974064067,
+        "summarizer": 0.936447910964489
+      },
+      "stage_wall_s": {
+        "analyzer": 61.26158076431602,
+        "grounder": 11.375103143043816,
+        "preprocess": 3.0138785652816296,
+        "scanner": 8.21432381682098,
+        "summarizer": 0.940940304659307
+      },
+      "started": "2026-11-07T03:16:50+0900",
+      "vid": "Assassin's Creed II::85dqh2.mp4",
+      "video_name": "85dqh2",
+      "wall_s": 84.81960689090192
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 6.12,
+      "game": "Assassin's Creed II",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.5463746013119817,
+      "n_bugs": 0,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 3.336719403974712,
+      "prompt_tokens": 3808,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.5463746013119817
+      },
+      "started": "2026-11-07T03:18:15+0900",
+      "vid": "Assassin's Creed II::85dqh2.mp4",
+      "video_name": "85dqh2",
+      "wall_s": 4.883470295928419
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 7.92,
+      "game": "Assassin's Creed II",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.6163461171090603,
+      "n_bugs": 0,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 4.89828094560653,
+      "prompt_tokens": 4014,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.6163461171090603
+      },
+      "started": "2026-11-07T03:18:20+0900",
+      "vid": "Assassin's Creed II::85uwdl.mp4",
+      "video_name": "85uwdl",
+      "wall_s": 6.515095513314009
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 4,
+      "completion_tokens": 459,
+      "duration": 7.92,
+      "game": "Assassin's Creed II",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 4,
+      "model_s": 7.057039299979806,
+      "n_bugs": 0,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 4.610721438191831,
+      "prompt_tokens": 8932,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "scanner": 4
+      },
+      "stage_model_s": {
+        "scanner": 7.057039299979806
+      },
+      "stage_wall_s": {
+        "preprocess": 4.610721438191831,
+        "scanner": 7.086203983053565,
+        "summarizer": 0.0020774994045495987
+      },
+      "started": "2026-11-07T03:18:27+0900",
+      "vid": "Assassin's Creed II::85uwdl.mp4",
+      "video_name": "85uwdl",
+      "wall_s": 11.708308302797377
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 54,
+      "completion_tokens": 6758,
+      "duration": 22.12,
+      "game": "Assassin's Creed Rogue",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 54,
+      "model_s": 84.22579821757972,
+      "n_bugs": 2,
+      "n_windows": 12,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "Ship rotating unnaturally at constant speed without any visible propulsion",
+          "During the time range of 20.0s to 23.0s, a character appears to be defying gravity, floating upwards at a constant speed, and NPCs on the boat are observed to be hovering slightly above the deck without any interaction, suggesting a glitch in the game's physics engine."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            [
+              20,
+              23
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 7.80478947609663,
+      "prompt_tokens": 90290,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 36,
+        "grounder": 5,
+        "scanner": 12,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 53.62868318054825,
+        "grounder": 7.52154300827533,
+        "scanner": 22.339515491388738,
+        "summarizer": 0.7360565373674035
+      },
+      "stage_wall_s": {
+        "analyzer": 53.73858163598925,
+        "grounder": 7.541380177251995,
+        "preprocess": 7.80478947609663,
+        "scanner": 22.421809401363134,
+        "summarizer": 0.7410991778597236
+      },
+      "started": "2026-11-07T03:18:39+0900",
+      "vid": "Assassin's Creed Rogue::69szo9.mp4",
+      "video_name": "69szo9",
+      "wall_s": 92.26366426981986
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 22.12,
+      "game": "Assassin's Creed Rogue",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.454304994083941,
+      "n_bugs": 0,
+      "n_windows": 12,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 8.840447683818638,
+      "prompt_tokens": 5772,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.454304994083941
+      },
+      "started": "2026-11-07T03:20:11+0900",
+      "vid": "Assassin's Creed Rogue::69szo9.mp4",
+      "video_name": "69szo9",
+      "wall_s": 11.295354588888586
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 16.1161,
+      "game": "Assassin's Creed Rogue",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.352636558935046,
+      "n_bugs": 0,
+      "n_windows": 9,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 8.078561203554273,
+      "prompt_tokens": 5771,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.352636558935046
+      },
+      "started": "2026-11-07T03:20:23+0900",
+      "vid": "Assassin's Creed Rogue::fokuu3.mp4",
+      "video_name": "fokuu3",
+      "wall_s": 10.431608263403177
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 52,
+      "completion_tokens": 7465,
+      "duration": 16.1161,
+      "game": "Assassin's Creed Rogue",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 52,
+      "model_s": 90.0234397361055,
+      "n_bugs": 1,
+      "n_windows": 9,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "In the scene, a ship's cannons remain motionless on the deck from frames 4 to 7, contradicting the expected movement of the surrounding crew members who are preparing for battle. Meanwhile, a character on the right is seen moving, yet they do not interact with the environment, suggesting a floating or non-physical state. This glitch occurs between 0.0s and 5.0s in the game."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              5
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 7.061892167665064,
+      "prompt_tokens": 87884,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 39,
+        "grounder": 3,
+        "scanner": 9,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 69.26815194822848,
+        "grounder": 4.193547674454749,
+        "scanner": 15.586467485874891,
+        "summarizer": 0.9752726275473833
+      },
+      "stage_wall_s": {
+        "analyzer": 69.412613093853,
+        "grounder": 4.209584222175181,
+        "preprocess": 7.061892167665064,
+        "scanner": 15.647556277923286,
+        "summarizer": 0.9792276937514544
+      },
+      "started": "2026-11-07T03:20:33+0900",
+      "vid": "Assassin's Creed Rogue::fokuu3.mp4",
+      "video_name": "fokuu3",
+      "wall_s": 97.32894088607281
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 54,
+      "completion_tokens": 7514,
+      "duration": 13.897216666666667,
+      "game": "Counter-Strike - Global Offensive",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 54,
+      "model_s": 92.03064984362572,
+      "n_bugs": 2,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "A character experiences erratic hand movements, appearing to clip through walls in certain frames, and their pistol exhibits an unexpected rotation in others, defying normal game physics and interaction mechanics.",
+          "Character #21 is lying on the ground, but the gun appears to be in a standing position, indicating a physics glitch where the gun is not interacting with the character correctly"
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              8,
+              13
+            ]
+          ],
+          [
+            [
+              4,
+              5
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 3.8435953678563237,
+      "prompt_tokens": 87210,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 37,
+        "grounder": 9,
+        "scanner": 7,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 64.49415182881057,
+        "grounder": 12.361704002134502,
+        "scanner": 14.745515011250973,
+        "summarizer": 0.429279001429677
+      },
+      "stage_wall_s": {
+        "analyzer": 64.6183448145166,
+        "grounder": 12.406917087733746,
+        "preprocess": 3.8435953678563237,
+        "scanner": 14.795096786692739,
+        "summarizer": 0.43389240745455027
+      },
+      "started": "2026-11-07T03:22:11+0900",
+      "vid": "Counter-Strike - Global Offensive::3lhxfa.mp4",
+      "video_name": "3lhxfa",
+      "wall_s": 96.11301409546286
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 82,
+      "duration": 13.897216666666667,
+      "game": "Counter-Strike - Global Offensive",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 3.1235635643824935,
+      "n_bugs": 0,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 4.2624663738533854,
+      "prompt_tokens": 5978,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 3.1235635643824935
+      },
+      "started": "2026-11-07T03:23:47+0900",
+      "vid": "Counter-Strike - Global Offensive::3lhxfa.mp4",
+      "video_name": "3lhxfa",
+      "wall_s": 7.386607646010816
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 5.016666666666667,
+      "game": "Counter-Strike - Global Offensive",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.316346894018352,
+      "n_bugs": 0,
+      "n_windows": 3,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 1.9385332558304071,
+      "prompt_tokens": 3066,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.316346894018352
+      },
+      "started": "2026-11-07T03:23:55+0900",
+      "vid": "Counter-Strike - Global Offensive::3s3k0e.mp4",
+      "video_name": "3s3k0e",
+      "wall_s": 3.255370456725359
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 29,
+      "completion_tokens": 4183,
+      "duration": 5.016666666666667,
+      "game": "Counter-Strike - Global Offensive",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 29,
+      "model_s": 50.4137027785182,
+      "n_bugs": 2,
+      "n_windows": 3,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The player character's gun appears to be floating 2 meters above the ground without any visible support . The gun is red and positioned horizontally, pointing directly forward",
+          "The soldier 'GIGN' is in a dark uniform, positioned in the center of the frame, and appears to be moving forward but remains in a similar position indicating a desynchronization in the animation"
+        ],
+        "time_nodes": [
+          [
+            [
+              2,
+              3
+            ]
+          ],
+          [
+            [
+              4,
+              5
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 1.778357575647533,
+      "prompt_tokens": 47928,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 22,
+        "grounder": 4,
+        "scanner": 3
+      },
+      "stage_model_s": {
+        "analyzer": 38.83054915256798,
+        "grounder": 5.431716308929026,
+        "scanner": 6.151437317021191
+      },
+      "stage_wall_s": {
+        "analyzer": 38.98968150187284,
+        "grounder": 5.458875522017479,
+        "preprocess": 1.778357575647533,
+        "scanner": 6.16839496511966,
+        "summarizer": 0.003734232857823372
+      },
+      "started": "2026-11-07T03:23:58+0900",
+      "vid": "Counter-Strike - Global Offensive::3s3k0e.mp4",
+      "video_name": "3s3k0e",
+      "wall_s": 52.414972241036594
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 118,
+      "completion_tokens": 17831,
+      "duration": 28.689655172413794,
+      "game": "Dark Souls III",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 118,
+      "model_s": 216.84165540896356,
+      "n_bugs": 2,
+      "n_windows": 15,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "The game exhibits a position shift glitch where a character's body unexpectedly moves slightly downward without any animation or movement changes, occurring between frames 37 and 39. Additionally, an unnatural pose in the character's arm persists from frame 64 to 71, where it remains static and unresponsive to the expected frame progression. Furthermore, a static character appears from frame 112 to 114, with no visible action, even as the game displays a 'YOU DIED' message in frame 113, suggesting the death animation fails, indicating a logic glitch.",
+          "In the game, a character and a monster exhibit a defensive stance glitch. The character #81390997 remains frozen in place, ignoring player input, while the monster's head is stuck off-center to the left, causing its body to angle awkwardly towards the bottom right corner. This glitch is evident from frames 72 to 79 and from 97 to 103, respectively, suggesting a flaw in the character animation logic."
+        ],
+        "time_nodes": [
+          [
+            [
+              6,
+              29
+            ]
+          ],
+          [
+            [
+              2,
+              27
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 9.334080809727311,
+      "prompt_tokens": 191594,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 72,
+        "grounder": 29,
+        "scanner": 15,
+        "summarizer": 2
+      },
+      "stage_model_s": {
+        "analyzer": 142.07020092289895,
+        "grounder": 42.80727133806795,
+        "scanner": 29.467535834759474,
+        "summarizer": 2.4966473132371902
+      },
+      "stage_wall_s": {
+        "analyzer": 142.53662088233978,
+        "grounder": 42.91542296297848,
+        "preprocess": 9.334080809727311,
+        "scanner": 29.561510745435953,
+        "summarizer": 2.5035952758044004
+      },
+      "started": "2026-11-07T03:24:51+0900",
+      "vid": "Dark Souls III::4f07gq.mp4",
+      "video_name": "4f07gq",
+      "wall_s": 226.86755903810263
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 82,
+      "duration": 28.689655172413794,
+      "game": "Dark Souls III",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.9776788000017405,
+      "n_bugs": 0,
+      "n_windows": 15,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 10.050100336782634,
+      "prompt_tokens": 5984,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.9776788000017405
+      },
+      "started": "2026-11-07T03:28:38+0900",
+      "vid": "Dark Souls III::4f07gq.mp4",
+      "video_name": "4f07gq",
+      "wall_s": 13.028277494944632
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 92,
+      "duration": 12.178845512178846,
+      "game": "Dark Souls III",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.7160947704687715,
+      "n_bugs": 0,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 3.8490658216178417,
+      "prompt_tokens": 5769,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.7160947704687715
+      },
+      "started": "2026-11-07T03:28:52+0900",
+      "vid": "Dark Souls III::59lykg.mp4",
+      "video_name": "59lykg",
+      "wall_s": 6.5656434642151
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 23,
+      "completion_tokens": 2986,
+      "duration": 12.178845512178846,
+      "game": "Dark Souls III",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 23,
+      "model_s": 38.89556182548404,
+      "n_bugs": 1,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The character is a warrior equipped with a sword and shield, positioned in mid-air with no visible support or ground interaction, indicating a possible glitch in movement or physics. The character's feet are not touching the ground, and they appear to be floating above the snowy surface"
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              11
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 3.385090973228216,
+      "prompt_tokens": 40675,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 10,
+        "grounder": 6,
+        "scanner": 7
+      },
+      "stage_model_s": {
+        "analyzer": 18.911392343230546,
+        "grounder": 8.145684757269919,
+        "scanner": 11.838484724983573
+      },
+      "stage_wall_s": {
+        "analyzer": 19.034371471963823,
+        "grounder": 8.184705478139222,
+        "preprocess": 3.385090973228216,
+        "scanner": 11.884383673779666,
+        "summarizer": 0.003364414907991886
+      },
+      "started": "2026-11-07T03:28:58+0900",
+      "vid": "Dark Souls III::59lykg.mp4",
+      "video_name": "59lykg",
+      "wall_s": 42.50802212860435
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 44,
+      "completion_tokens": 6830,
+      "duration": 8.94915254237288,
+      "game": "Destiny 2",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 44,
+      "model_s": 80.86005076020956,
+      "n_bugs": 1,
+      "n_windows": 5,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "The red enemy character experiences a hovering glitch, defying the game's physics by floating above a rocky ledge without any visible propulsion. Subsequently, the character is seen in a free-fall position, descending vertically towards the ground without any propulsion or energy weapon usage. Additionally, the character is momentarily frozen in a T-pose, suggesting a rendering error or animation issue, occurring during the scene's early moments."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              9
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 2.7771495524793863,
+      "prompt_tokens": 71587,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 34,
+        "grounder": 4,
+        "scanner": 5,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 63.74738722015172,
+        "grounder": 6.335617773234844,
+        "scanner": 9.825579728931189,
+        "summarizer": 0.9514660378918052
+      },
+      "stage_wall_s": {
+        "analyzer": 63.92893724795431,
+        "grounder": 6.352921352721751,
+        "preprocess": 2.7771495524793863,
+        "scanner": 9.848984566517174,
+        "summarizer": 0.9560837615281343
+      },
+      "started": "2026-11-07T03:29:41+0900",
+      "vid": "Destiny 2::7acpm9.mp4",
+      "video_name": "7acpm9",
+      "wall_s": 83.87986332643777
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 82,
+      "duration": 8.94915254237288,
+      "game": "Destiny 2",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.691618710756302,
+      "n_bugs": 0,
+      "n_windows": 5,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 3.0342306084930897,
+      "prompt_tokens": 4997,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.691618710756302
+      },
+      "started": "2026-11-07T03:31:06+0900",
+      "vid": "Destiny 2::7acpm9.mp4",
+      "video_name": "7acpm9",
+      "wall_s": 5.726522935554385
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 86,
+      "duration": 4.133333333333334,
+      "game": "Dishonored 2",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.8275598967447877,
+      "n_bugs": 1,
+      "n_windows": 3,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The character appears to be stuck in a crouched position and does not move, which is unusual behavior for a character in Dishonored 2."
+        ],
+        "time_nodes": [
+          [
+            [
+              0.0,
+              4.1
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 1.4812535736709833,
+      "prompt_tokens": 2831,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.8275598967447877
+      },
+      "started": "2026-11-07T03:31:12+0900",
+      "vid": "Dishonored 2::8uqcsx.mp4",
+      "video_name": "8uqcsx",
+      "wall_s": 3.3096824157983065
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 14,
+      "completion_tokens": 2006,
+      "duration": 4.133333333333334,
+      "game": "Dishonored 2",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 14,
+      "model_s": 24.56913074478507,
+      "n_bugs": 1,
+      "n_windows": 3,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "Large red blood splatter on the ground no apparent cause"
+        ],
+        "time_nodes": [
+          [
+            [
+              4,
+              5
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 1.3149161906912923,
+      "prompt_tokens": 24445,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 10,
+        "grounder": 1,
+        "scanner": 3
+      },
+      "stage_model_s": {
+        "analyzer": 17.86430411785841,
+        "grounder": 1.763621007092297,
+        "scanner": 4.9412056198343635
+      },
+      "stage_wall_s": {
+        "analyzer": 17.980184303596616,
+        "grounder": 1.7758842539042234,
+        "preprocess": 1.3149161906912923,
+        "scanner": 4.950682125985622,
+        "summarizer": 0.0032462552189826965
+      },
+      "started": "2026-11-07T03:31:15+0900",
+      "vid": "Dishonored 2::8uqcsx.mp4",
+      "video_name": "8uqcsx",
+      "wall_s": 26.042484248057008
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 45,
+      "completion_tokens": 6332,
+      "duration": 20.086733333333335,
+      "game": "Dishonored 2",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 45,
+      "model_s": 78.95280469954014,
+      "n_bugs": 1,
+      "n_windows": 11,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "In a first-person shooter game set in an industrial environment, a green bottle inexplicably floats 2 meters above the floor shortly after being thrown by the player, defying normal physics. Additionally, a character's hand suddenly appears in an unnatural position, seemingly without a logical cause or transition from a normal stance, disrupting the game's expected visual flow."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              3
+            ],
+            [
+              12,
+              15
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 7.022890716791153,
+      "prompt_tokens": 78206,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 27,
+        "grounder": 6,
+        "scanner": 11,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 49.041280599310994,
+        "grounder": 9.246644639410079,
+        "scanner": 19.85739767830819,
+        "summarizer": 0.8074817825108767
+      },
+      "stage_wall_s": {
+        "analyzer": 49.32345040142536,
+        "grounder": 9.273890848271549,
+        "preprocess": 7.022890716791153,
+        "scanner": 19.920689024031162,
+        "summarizer": 0.8120050560683012
+      },
+      "started": "2026-11-07T03:31:42+0900",
+      "vid": "Dishonored 2::dqzhkl.mp4",
+      "video_name": "dqzhkl",
+      "wall_s": 86.37029382120818
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 20.086733333333335,
+      "game": "Dishonored 2",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.1494752429425716,
+      "n_bugs": 0,
+      "n_windows": 11,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 7.671676457859576,
+      "prompt_tokens": 5773,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.1494752429425716
+      },
+      "started": "2026-11-07T03:33:09+0900",
+      "vid": "Dishonored 2::dqzhkl.mp4",
+      "video_name": "dqzhkl",
+      "wall_s": 9.821894185617566
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 88,
+      "duration": 15.015,
+      "game": "Dying Light",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.926985379308462,
+      "n_bugs": 0,
+      "n_windows": 8,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 6.808145629242063,
+      "prompt_tokens": 5994,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.926985379308462
+      },
+      "started": "2026-11-07T03:33:19+0900",
+      "vid": "Dying Light::2v08nr.mp4",
+      "video_name": "2v08nr",
+      "wall_s": 9.735915313474834
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 52,
+      "completion_tokens": 6951,
+      "duration": 15.015,
+      "game": "Dying Light",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 52,
+      "model_s": 83.48202344309539,
+      "n_bugs": 2,
+      "n_windows": 8,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The game exhibits a physics glitch where a worker character appears to float horizontally across scaffolding without any propulsion, remaining static in a scene for several frames. Additionally, another character is shown stuck behind the scaffolding, with no movement observed for an extended period, indicating a pathfinding issue.",
+          "The character wearing a yellow shirt with a hard hat is initially standing on the ground but suddenly launches into the air defying gravity without any visible propulsion or collision with an object. The character's position changes from standing to lying on the ground, indicating a sudden and unnatural movement"
+        ],
+        "time_nodes": [
+          [
+            [
+              6,
+              15
+            ]
+          ],
+          [
+            [
+              10,
+              11
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 6.718422335572541,
+      "prompt_tokens": 84219,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 34,
+        "grounder": 9,
+        "scanner": 8,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 56.114479856565595,
+        "grounder": 12.002129459753633,
+        "scanner": 14.703073027543724,
+        "summarizer": 0.6623410992324352
+      },
+      "stage_wall_s": {
+        "analyzer": 56.17387804389,
+        "grounder": 12.02289770822972,
+        "preprocess": 6.718422335572541,
+        "scanner": 14.729170206934214,
+        "summarizer": 0.6672569615766406
+      },
+      "started": "2026-11-07T03:33:29+0900",
+      "vid": "Dying Light::2v08nr.mp4",
+      "video_name": "2v08nr",
+      "wall_s": 90.32668235804886
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 105,
+      "completion_tokens": 14535,
+      "duration": 30.163466666666668,
+      "game": "Dying Light",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 105,
+      "model_s": 176.8099685171619,
+      "n_bugs": 1,
+      "n_windows": 16,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "In a video game scene, multiple characters and objects exhibit unexpected floating behavior defying gravity. A blue-armored enemy is suspended mid-air above a platform, while another character in a combat outfit floats 2 meters above a high platform in an industrial setting. Additionally, a weapon model remains stuck in a fixed position, and dead character models fail to move, appearing as if they are missing entirely, with a blank space where they should be. The glitch is observed in various parts of the scene, including mid-air and high platforms, and affects both enemy and player characters."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              13
+            ],
+            [
+              16,
+              31
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 10.552990613505244,
+      "prompt_tokens": 173044,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 73,
+        "grounder": 15,
+        "scanner": 16,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 123.35755065269768,
+        "grounder": 20.93626312352717,
+        "scanner": 31.234973773360252,
+        "summarizer": 1.2811809675768018
+      },
+      "stage_wall_s": {
+        "analyzer": 123.86374208889902,
+        "grounder": 21.00426758173853,
+        "preprocess": 10.552990613505244,
+        "scanner": 31.350237141363323,
+        "summarizer": 1.285347261466086
+      },
+      "started": "2026-11-07T03:35:00+0900",
+      "vid": "Dying Light::2yf8k1.mp4",
+      "video_name": "2yf8k1",
+      "wall_s": 188.07312048599124
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 74,
+      "duration": 30.163466666666668,
+      "game": "Dying Light",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.7102521983906627,
+      "n_bugs": 0,
+      "n_windows": 16,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 11.326892123557627,
+      "prompt_tokens": 5772,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.7102521983906627
+      },
+      "started": "2026-11-07T03:38:08+0900",
+      "vid": "Dying Light::2yf8k1.mp4",
+      "video_name": "2yf8k1",
+      "wall_s": 14.037738185375929
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 50.0,
+      "game": "EA Sports UFC 2",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.131020499393344,
+      "n_bugs": 0,
+      "n_windows": 25,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 20.49032479710877,
+      "prompt_tokens": 5982,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.131020499393344
+      },
+      "started": "2026-11-07T03:38:22+0900",
+      "vid": "EA Sports UFC 2::4bmqib.mp4",
+      "video_name": "4bmqib",
+      "wall_s": 22.62207979336381
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 50,
+      "completion_tokens": 6125,
+      "duration": 50.0,
+      "game": "EA Sports UFC 2",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 50,
+      "model_s": 84.80954659450799,
+      "n_bugs": 1,
+      "n_windows": 25,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "Fighter A's left leg is bent and stationary, not moving or interacting with the opponent's leg during the kick sequence. This is inconsistent with the expected leg movement in a combat scenario"
+        ],
+        "time_nodes": [
+          [
+            [
+              14,
+              41
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 18.567174760624766,
+      "prompt_tokens": 94064,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 10,
+        "grounder": 15,
+        "scanner": 25
+      },
+      "stage_model_s": {
+        "analyzer": 17.696402343921363,
+        "grounder": 20.435534513555467,
+        "scanner": 46.67760973703116
+      },
+      "stage_wall_s": {
+        "analyzer": 17.739236859604716,
+        "grounder": 20.539899394847453,
+        "preprocess": 18.567174760624766,
+        "scanner": 46.88045719452202,
+        "summarizer": 0.0033664442598819733
+      },
+      "started": "2026-11-07T03:38:45+0900",
+      "vid": "EA Sports UFC 2::4bmqib.mp4",
+      "video_name": "4bmqib",
+      "wall_s": 103.74762213230133
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 36,
+      "completion_tokens": 4681,
+      "duration": 10.643966666666667,
+      "game": "Skate 3",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 36,
+      "model_s": 56.964279365725815,
+      "n_bugs": 1,
+      "n_windows": 6,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "The character in blue armor is experiencing a defying gravity glitch, where they rise and fall without any propulsion, remaining suspended in mid-air for a short duration. The character's shadow on the ground indicates they are not interacting with the environment, and this behavior is observed during the time range of 2.0s to 3.0s and 6.0s to 9.0s. Additionally, when the character attempts to jump, they instead float upwards, defying the expected gravitational pull, during frames 34-36."
+        ],
+        "time_nodes": [
+          [
+            [
+              2,
+              3
+            ],
+            [
+              6,
+              9
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 3.741818050853908,
+      "prompt_tokens": 59827,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 24,
+        "grounder": 5,
+        "scanner": 6,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 37.82241549156606,
+        "grounder": 7.466854573227465,
+        "scanner": 10.415236494503915,
+        "summarizer": 1.2597728064283729
+      },
+      "stage_wall_s": {
+        "analyzer": 37.89630276430398,
+        "grounder": 7.496759668923914,
+        "preprocess": 3.741818050853908,
+        "scanner": 10.459525536745787,
+        "summarizer": 1.263978160917759
+      },
+      "started": "2026-11-07T03:40:30+0900",
+      "vid": "Skate 3::1uvre3.mp4",
+      "video_name": "1uvre3",
+      "wall_s": 60.874394721351564
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 10.643966666666667,
+      "game": "Skate 3",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.12987098749727,
+      "n_bugs": 0,
+      "n_windows": 6,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 4.171452847309411,
+      "prompt_tokens": 5979,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.12987098749727
+      },
+      "started": "2026-11-07T03:41:31+0900",
+      "vid": "Skate 3::1uvre3.mp4",
+      "video_name": "1uvre3",
+      "wall_s": 6.301917945034802
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 89,
+      "duration": 29.544303797468356,
+      "game": "Star Wars Jedi - Fallen Order",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.943583649583161,
+      "n_bugs": 0,
+      "n_windows": 15,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 10.085834263823926,
+      "prompt_tokens": 5981,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.943583649583161
+      },
+      "started": "2026-11-07T03:41:37+0900",
+      "vid": "Star Wars Jedi - Fallen Order::dwwjpb.mp4",
+      "video_name": "dwwjpb",
+      "wall_s": 13.030025261454284
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 117,
+      "completion_tokens": 16798,
+      "duration": 29.544303797468356,
+      "game": "Star Wars Jedi - Fallen Order",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 117,
+      "model_s": 201.49770400486887,
+      "n_bugs": 3,
+      "n_windows": 15,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The character in a crouched position experiences a glitch where their limbs remain static while the shadow and light effects update, suggesting a collision detection issue. Additionally, during specific sequences, the character's limb positions remain consistent despite descending in a controlled manner, indicating a frozen animation state. In another instance, the character's weapon and hand pose do not animate correctly, remaining static as they move forward and transition into defensive stances.",
+          "In the game, the character experiences an unexpected floating phenomenon, defying the expected physics. During the scene, the character appears to ascend upwards in the absence of any propulsion or environmental interaction, indicating a glitch in the game's mechanics. This anomaly occurs during specific moments in the sequence, roughly between 4.0 and 5.0 seconds, and again between 14.0 and 19.0 seconds, causing the character to rise without any visible force or animation.",
+          "The player character is in a crouched position and appears to be thrown slightly forward and 108, with no apparent cause or force applied. The character is wearing dark armor and wielding a weapon, and the environment remains consistent with previous frames"
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              5
+            ],
+            [
+              22,
+              29
+            ]
+          ],
+          [
+            [
+              4,
+              5
+            ],
+            [
+              14,
+              19
+            ]
+          ],
+          [
+            [
+              24,
+              27
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 8.580779722891748,
+      "prompt_tokens": 187631,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 76,
+        "grounder": 24,
+        "scanner": 15,
+        "summarizer": 2
+      },
+      "stage_model_s": {
+        "analyzer": 137.36046275217086,
+        "grounder": 33.795122645795345,
+        "scanner": 28.193589531816542,
+        "summarizer": 2.148529075086117
+      },
+      "stage_wall_s": {
+        "analyzer": 137.81604048237205,
+        "grounder": 33.88141974899918,
+        "preprocess": 8.580779722891748,
+        "scanner": 28.292560076341033,
+        "summarizer": 2.1546915667131543
+      },
+      "started": "2026-11-07T03:41:51+0900",
+      "vid": "Star Wars Jedi - Fallen Order::dwwjpb.mp4",
+      "video_name": "dwwjpb",
+      "wall_s": 210.74172849580646
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 17,
+      "completion_tokens": 2124,
+      "duration": 6.033333333333333,
+      "game": "Star Wars Jedi - Fallen Order",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 17,
+      "model_s": 26.061927039176226,
+      "n_bugs": 1,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "Spaceship partially embedded in ground unnatural position change"
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              1
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 2.001918900758028,
+      "prompt_tokens": 29976,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 12,
+        "grounder": 1,
+        "scanner": 4
+      },
+      "stage_model_s": {
+        "analyzer": 18.374938369728625,
+        "grounder": 1.3492543948814273,
+        "scanner": 6.3377342745661736
+      },
+      "stage_wall_s": {
+        "analyzer": 18.413328857161105,
+        "grounder": 1.3590774657204747,
+        "preprocess": 2.001918900758028,
+        "scanner": 6.357571455650032,
+        "summarizer": 0.003033740445971489
+      },
+      "started": "2026-11-07T03:45:22+0900",
+      "vid": "Star Wars Jedi - Fallen Order::dxc2vz.mp4",
+      "video_name": "dxc2vz",
+      "wall_s": 28.150420158170164
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 6.033333333333333,
+      "game": "Star Wars Jedi - Fallen Order",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.4173542447388172,
+      "n_bugs": 0,
+      "n_windows": 4,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 2.320155401714146,
+      "prompt_tokens": 3810,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.4173542447388172
+      },
+      "started": "2026-11-07T03:45:50+0900",
+      "vid": "Star Wars Jedi - Fallen Order::dxc2vz.mp4",
+      "video_name": "dxc2vz",
+      "wall_s": 3.738028110936284
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 13.533333333333333,
+      "game": "The Elder Scrolls V - Skyrim",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.1234125811606646,
+      "n_bugs": 0,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 3.8923533195629716,
+      "prompt_tokens": 5978,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.1234125811606646
+      },
+      "started": "2026-11-07T03:45:54+0900",
+      "vid": "The Elder Scrolls V - Skyrim::2ljepq.mp4",
+      "video_name": "2ljepq",
+      "wall_s": 6.016284360550344
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 49,
+      "completion_tokens": 6871,
+      "duration": 13.533333333333333,
+      "game": "The Elder Scrolls V - Skyrim",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 49,
+      "model_s": 81.35040623415262,
+      "n_bugs": 1,
+      "n_windows": 7,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "The player character encounters a clipping glitch, where they appear to be moving forward but the camera remains static, indicating a rendering error preventing vertical movement. Additionally, a crouched figure in a forest environment remains stationary in a crouched position, suggesting a physics issue. The glitch occurs on a narrow, elevated platform above a deep crevice, defying normal movement physics and interaction with the environment."
+        ],
+        "time_nodes": [
+          [
+            [
+              0,
+              9
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 3.708085285499692,
+      "prompt_tokens": 80867,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 36,
+        "grounder": 5,
+        "scanner": 7,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 60.132546157576144,
+        "grounder": 7.574214334599674,
+        "scanner": 12.729504344984889,
+        "summarizer": 0.9141413969919086
+      },
+      "stage_wall_s": {
+        "analyzer": 60.22328972350806,
+        "grounder": 7.594285290688276,
+        "preprocess": 3.708085285499692,
+        "scanner": 12.76214886456728,
+        "summarizer": 0.9182430785149336
+      },
+      "started": "2026-11-07T03:46:00+0900",
+      "vid": "The Elder Scrolls V - Skyrim::2ljepq.mp4",
+      "video_name": "2ljepq",
+      "wall_s": 85.22096976824105
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 17,
+      "completion_tokens": 2082,
+      "duration": 9.533333333333333,
+      "game": "The Elder Scrolls V - Skyrim",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 17,
+      "model_s": 26.521874183788896,
+      "n_bugs": 1,
+      "n_windows": 5,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [
+          "Player character's position shifts without any visible movement or animation suggesting a potential AI/pathfinding issue"
+        ],
+        "time_nodes": [
+          [
+            [
+              2,
+              3
+            ]
+          ]
+        ]
+      },
+      "position": 0,
+      "preprocess_s": 3.3906117975711823,
+      "prompt_tokens": 30215,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 10,
+        "grounder": 2,
+        "scanner": 5
+      },
+      "stage_model_s": {
+        "analyzer": 15.633274737745523,
+        "grounder": 2.679605054669082,
+        "scanner": 8.20899439137429
+      },
+      "stage_wall_s": {
+        "analyzer": 15.740592413581908,
+        "grounder": 2.6950613521039486,
+        "preprocess": 3.3906117975711823,
+        "scanner": 8.243834757246077,
+        "summarizer": 0.003153569996356964
+      },
+      "started": "2026-11-07T03:47:26+0900",
+      "vid": "The Elder Scrolls V - Skyrim::2x4odr.mp4",
+      "video_name": "2x4odr",
+      "wall_s": 30.089006452821195
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 9.533333333333333,
+      "game": "The Elder Scrolls V - Skyrim",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 1.921757579781115,
+      "n_bugs": 0,
+      "n_windows": 5,
+      "ok": true,
+      "order": [
+        "glide",
+        "vanilla"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 1,
+      "preprocess_s": 3.65700167696923,
+      "prompt_tokens": 4994,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 1.921757579781115
+      },
+      "started": "2026-11-07T03:47:56+0900",
+      "vid": "The Elder Scrolls V - Skyrim::2x4odr.mp4",
+      "video_name": "2x4odr",
+      "wall_s": 5.579267968423665
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 1,
+      "completion_tokens": 20,
+      "duration": 54.9549,
+      "game": "Wreckfest",
+      "memo_hits": 0,
+      "method": "vanilla",
+      "model_calls": 1,
+      "model_s": 2.041614598594606,
+      "n_bugs": 0,
+      "n_windows": 28,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [],
+        "time_nodes": []
+      },
+      "position": 0,
+      "preprocess_s": 22.116763088852167,
+      "prompt_tokens": 5986,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "vanilla": 1
+      },
+      "stage_model_s": {
+        "vanilla": 2.041614598594606
+      },
+      "started": "2026-11-07T03:48:02+0900",
+      "vid": "Wreckfest::2yqmzd.mp4",
+      "video_name": "2yqmzd",
+      "wall_s": 24.15896777063608
+    },
+    {
+      "agrees_with_reported_run": null,
+      "calls": 250,
+      "completion_tokens": 34593,
+      "duration": 54.9549,
+      "game": "Wreckfest",
+      "memo_hits": 0,
+      "method": "glide",
+      "model_calls": 250,
+      "model_s": 413.20262181572616,
+      "n_bugs": 1,
+      "n_windows": 28,
+      "ok": true,
+      "order": [
+        "vanilla",
+        "glide"
+      ],
+      "output": {
+        "bugs": [
+          "In the game, a black sports car with yellow stripes experiences a series of floating glitches, defying normal physics. The car is seen hovering 2-3 meters above the ground, maintaining a clear space between itself and the track, and remaining suspended mid-air in various locations, including near a highway overpass and on a sloped surface. The car's wheels are often pointing downwards, indicating it is mid-jump but not interacting with the ground or environment as expected. This behavior persists across the game's scene, from near the ramp to the highway overpass and the sloped surface, showcasing a consistent glitch in the car's movement and gravity."
+        ],
+        "time_nodes": [
+          [
+            [
+              4,
+              45
+            ],
+            [
+              50,
+              51
+            ]
+          ]
+        ]
+      },
+      "position": 1,
+      "preprocess_s": 20.25772161781788,
+      "prompt_tokens": 409241,
+      "repeat": 0,
+      "request_failures": 0,
+      "stage_calls": {
+        "analyzer": 180,
+        "grounder": 41,
+        "scanner": 28,
+        "summarizer": 1
+      },
+      "stage_model_s": {
+        "analyzer": 295.26167689450085,
+        "grounder": 61.04287220630795,
+        "scanner": 55.426899432204664,
+        "summarizer": 1.471173282712698
+      },
+      "stage_wall_s": {
+        "analyzer": 295.82995166722685,
+        "grounder": 61.20962239801884,
+        "preprocess": 20.25772161781788,
+        "scanner": 55.6452023210004,
+        "summarizer": 1.4758797669783235
+      },
+      "started": "2026-11-07T03:48:27+0900",
+      "vid": "Wreckfest::2yqmzd.mp4",
+      "video_name": "2yqmzd",
+      "wall_s": 434.4353774227202
+    }
+  ],
+  "environment": {
+    "cpu_count": 192,
+    "gpus": [
+      "NVIDIA H200 NVL, 143771 MiB, 610.43.02",
+      "NVIDIA H200 NVL, 143771 MiB, 610.43.02"
+    ],
+    "host": "aiworkx",
+    "numpy": "2.5.3",
+    "opencv": "5.0.0",
+    "platform": "Linux-6.17.0-19-generic-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "glide": {
+    "commit": null,
+    "repo": "/path/to/GliDe",
+    "sam3_available": true
+  },
+  "methods": [
+    "glide",
+    "vanilla"
+  ],
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "n": 20,
+  "server": {
+    "api_base": "http://localhost:8013/v1",
+    "models": [
+      "Qwen/Qwen2.5-VL-7B-Instruct"
+    ],
+    "version": "0.8.5.post1"
+  },
+  "skipped_methods": {},
+  "split": "test",
+  "subset_file": "/path/to/VideoGlitchBench/paired_timing_v4/v10/timing/subset_test_20.json",
+  "subset_sha1": "8ec13e3413d9cc9b671eab29364c7b6036b71c55",
+  "updated": "2026-11-07T03:55:41+0900",
+  "version": "10.0"
+}

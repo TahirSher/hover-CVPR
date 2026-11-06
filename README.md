@@ -53,12 +53,13 @@ The scripts import `HOVER.py` and `hover_revision.py` from the repository root a
 | `score_judgefix.py`, `check_empty.py` | InternVL2.5-8B re-tuned without failed judge requests; finds scored pairs whose judge request failed. |
 | `judge_agreement.py` | Agreement of the two judges (Llama-3.1-8B-Instruct, Qwen2.5-72B-Instruct-AWQ) on every scored pair. |
 | `timing_v2.py`, `warm.py` | Re-timing of the scored configurations with per-clip logs; parallel VLM-cache warm-up. |
-| `count_tracker.py`, `score_glide_clean.py` | GliDe's SAM 3 tracker outcomes; clean GliDe re-runs (no tracker out-of-memory) on Qwen2.5-VL-3B, InternVL2.5-8B and UI-TARS-1.5-7B (Supp. Tabs. S26-S27). |
+| `count_tracker.py`, `score_glide_clean.py` | GliDe's SAM 3 tracker outcomes; clean GliDe re-runs (no tracker out-of-memory) on Qwen2.5-VL-3B, InternVL2.5-8B and UI-TARS-1.5-7B (Supp. Tabs. S27-S28). |
 | `v3_controls.py` | Shuffled-description and abstention controls for the core (Supp. Sec. S9.7). |
 | `score_full.py` | Core and vanilla on all 5,238 clips of 120 games, and on the 96 games never used (Supp. Sec. S9.8). |
-| `v4_reviewer.py` | Clips with one vs. several glitches, per-game differences against the GliDe re-run, glitches per clip on the whole benchmark; cached outputs and ratings only (Supp. Sec. S9.9, Tab. S34). |
-| `v4_split_stats.py` | The 12 development, 12 test and 96 unused games compared on duration, glitch-free and multi-glitch shares, glitch coverage and genre (Supp. Tab. S33). |
+| `v4_reviewer.py` | Clips with one vs. several glitches, per-game differences against the GliDe re-run, glitches per clip on the whole benchmark; cached outputs and ratings only (Supp. Sec. S9.9, Tab. S36). |
+| `v4_split_stats.py` | The 12 development, 12 test and 96 unused games compared on duration, glitch-free and multi-glitch shares, glitch coverage and genre (Supp. Tab. S34). |
 | `v4_timing_ci.py`, `timing_stats.py` | Intervals and paired contrasts of the first timing session for all five backbones from the per-clip logs (`timing_stats.py` holds the statistics code of the timing study verbatim; it reproduces `report_test_100.md`). Reads the paper zip's `data/timing/` after extracting it in the repository root. |
+| `paired_timing.sh`, `v4_timing_paired_stats.py` | Same-session timing (Supp. Tab. S23): vanilla, GliDe, the core and HOVER timed back to back on one vLLM server per backbone, 20 test clips covering all 12 games; statistics with the code of the first session. `results/v4_timing_paired_per_clip.csv` holds every per-clip time (`--per_clip` reproduces `v4_timing_paired_stats.csv` exactly); `results/paired_timing_glide/` the GliDe and vanilla timing logs with their outputs. |
 | `make_video_sheet.py`, `analyze_video_check.py` | Video-grounded human check: 60 test clips (45 with, 15 without a glitch), every report of the core and the GliDe re-run rated blind by annotators who watch the clip; the analysis of the returned sheets. |
 | `make_human_sheet.py`, `human_agreement.py`, `human_methods.py` | Blinded human check: 140 matched test pairs (35 per method), agreement with both judges, per-method ratings and tests (Supp. Sec. S9.12). |
 | `human_check/` | The two returned annotation workbooks (`human_sheet_annotator_{A,B}.xlsx`, sheet `Annotate`), the key (method, backbone, judge ratings) and the instructions given to the annotators. |
