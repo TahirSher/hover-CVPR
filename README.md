@@ -10,7 +10,7 @@ best-supported hypothesis and a whole-clip span) is the paper's training-free ba
 
 | File | Contents |
 |---|---|
-| `HOVER_CVPR2027_revised.zip` | Submission sources: `main.tex`, `supp.tex`, sections, tables, figures, the data every number is read from (`data/`), and the scripts that regenerate tables and figures. Includes `main.pdf` and `supp.pdf` built with pdfLaTeX. Its own `README.md` gives the build order and the list of changes of all three revisions (the third adds the human check, the clean GliDe re-runs and the full benchmark). |
+| `HOVER_CVPR2027_revised.zip` | Submission sources: `main.tex`, `supp.tex`, sections, tables, figures, the data every number is read from (`data/`), and the scripts that regenerate tables and figures. Includes `main.pdf` and `supp.pdf` built with pdfLaTeX. Its own `README.md` gives the build order and the list of changes of all revisions (the third adds the human check, the clean GliDe re-runs and the full benchmark; the pre-submission round adds Prop. 1 under Hungarian matching, multi-glitch, per-game and budget checks). |
 | `author-kit-CVPR2027-v1-latex (1).zip` | The unmodified CVPR 2027 LaTeX author kit. |
 
 ## Method and analysis code
@@ -56,9 +56,10 @@ The scripts import `HOVER.py` and `hover_revision.py` from the repository root a
 | `count_tracker.py`, `score_glide_clean.py` | GliDe's SAM 3 tracker outcomes; clean GliDe re-runs (no tracker out-of-memory) on Qwen2.5-VL-3B, InternVL2.5-8B and UI-TARS-1.5-7B (Supp. Tabs. S26-S27). |
 | `v3_controls.py` | Shuffled-description and abstention controls for the core (Supp. Sec. S9.7). |
 | `score_full.py` | Core and vanilla on all 5,238 clips of 120 games, and on the 96 games never used (Supp. Sec. S9.8). |
-| `make_human_sheet.py`, `human_agreement.py`, `human_methods.py` | Blinded human check: 140 matched test pairs (35 per method), agreement with both judges, per-method ratings and tests (Supp. Sec. S9.11). |
+| `v4_reviewer.py` | Clips with one vs. several glitches, per-game differences against the GliDe re-run, glitches per clip on the whole benchmark; cached outputs and ratings only (Supp. Sec. S9.9, Tab. S34). |
+| `make_human_sheet.py`, `human_agreement.py`, `human_methods.py` | Blinded human check: 140 matched test pairs (35 per method), agreement with both judges, per-method ratings and tests (Supp. Sec. S9.12). |
 | `human_check/` | The two returned annotation workbooks (`human_sheet_annotator_{A,B}.xlsx`, sheet `Annotate`), the key (method, backbone, judge ratings) and the instructions given to the annotators. |
-| `results/` | All CSVs of the second and third revisions (`v2_*`, `v3_*`); identical to `data/v2/` in the paper zip. |
+| `results/` | All CSVs of the second and third revisions and the pre-submission round (`v2_*`, `v3_*`, `v4_*`); identical to `data/v2/` in the paper zip. |
 | `revision2_outputs.zip` | Raw outputs behind them (extract in the repository root): `h_only/` (stage H per window, all backbones and definitions), `h_full/` (core and vanilla on the full benchmark), `glide_clean/` (pass `--out_dir revision2/glide_clean/data_<backbone>_sam3_clean` to `score_glide_clean.py`; per-clip reports, logs and imported run files of the clean GliDe re-runs). |
 
 ## Splits and caches

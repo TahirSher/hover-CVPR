@@ -1,0 +1,4 @@
+split,n_clips,n_gt,clips_0,clips_1,clips_2plus,share_2plus,recall_ceiling_one_report
+all,5238,4232,1132,3989,117,0.0223368,0.970227
+dev,445,371,87,345,13,0.0292135,0.96496
+test,383,325,76,294,13,0.0339426,0.944615

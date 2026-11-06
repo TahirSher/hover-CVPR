@@ -82,6 +82,7 @@ python revision2/judge_agreement.py                     # needs the Qwen2.5-72B-
 python revision2/v3_controls.py                         # shuffled-description and abstention controls
 python revision2/score_glide_clean.py --backbone internvl2.5-8b   # also qwen2.5-vl-3b, ui-tars-1.5-7b
 python revision2/score_full.py                          # full benchmark (all 5,238 clips)
+python revision2/v4_reviewer.py                         # multi-glitch clips, per-game results (cache only)
 python revision2/human_agreement.py && python revision2/human_methods.py   # human check
 ```
 
