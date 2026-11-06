@@ -57,6 +57,9 @@ The scripts import `HOVER.py` and `hover_revision.py` from the repository root a
 | `v3_controls.py` | Shuffled-description and abstention controls for the core (Supp. Sec. S9.7). |
 | `score_full.py` | Core and vanilla on all 5,238 clips of 120 games, and on the 96 games never used (Supp. Sec. S9.8). |
 | `v4_reviewer.py` | Clips with one vs. several glitches, per-game differences against the GliDe re-run, glitches per clip on the whole benchmark; cached outputs and ratings only (Supp. Sec. S9.9, Tab. S34). |
+| `v4_split_stats.py` | The 12 development, 12 test and 96 unused games compared on duration, glitch-free and multi-glitch shares, glitch coverage and genre (Supp. Tab. S33). |
+| `v4_timing_ci.py`, `timing_stats.py` | Intervals and paired contrasts of the first timing session for all five backbones from the per-clip logs (`timing_stats.py` holds the statistics code of the timing study verbatim; it reproduces `report_test_100.md`). Reads the paper zip's `data/timing/` after extracting it in the repository root. |
+| `make_video_sheet.py`, `analyze_video_check.py` | Video-grounded human check: 60 test clips (45 with, 15 without a glitch), every report of the core and the GliDe re-run rated blind by annotators who watch the clip; the analysis of the returned sheets. |
 | `make_human_sheet.py`, `human_agreement.py`, `human_methods.py` | Blinded human check: 140 matched test pairs (35 per method), agreement with both judges, per-method ratings and tests (Supp. Sec. S9.12). |
 | `human_check/` | The two returned annotation workbooks (`human_sheet_annotator_{A,B}.xlsx`, sheet `Annotate`), the key (method, backbone, judge ratings) and the instructions given to the annotators. |
 | `results/` | All CSVs of the second and third revisions and the pre-submission round (`v2_*`, `v3_*`, `v4_*`); identical to `data/v2/` in the paper zip. |
@@ -66,7 +69,7 @@ The scripts import `HOVER.py` and `hover_revision.py` from the repository root a
 
 | File | Contents |
 |---|---|
-| `splits/` | The game-disjoint VideoGlitchBench splits used throughout: `train.json` (96 games), `dev.json` (445 clips, 12 games), `test.json` (383 clips, 12 games) and `game_assignments.json`. Place them in `<VideoGlitchBench root>/splits/`. |
+| `splits/` | The game-disjoint VideoGlitchBench splits used throughout: `train.json` (96 games), `dev.json` (445 clips, 12 games), `test.json` (383 clips, 12 games) and `game_assignments.json` (game -> split, derived from the three files). Place them in `<VideoGlitchBench root>/splits/`. |
 | `caches/judge_cache.tar.gz` | Every judge rating behind the reported numbers: Llama-3.1-8B-Instruct (main judge), the three re-judgings (`__repeat1..3`) and the second judge Qwen2.5-72B-Instruct-AWQ, including the second and third revisions. Keys depend only on the judge model, temperature, prompt and the two descriptions, so extracting it in `<root>/HOVER_v8_work/` makes every evaluation reproduce exactly without re-sampling the judge (temperature 0.3). |
 | `caches/vlm_cache_<backbone>.tar.gz` | The raw response of every VLM call of the main run and the revision analyses, one JSON per call. Keys include the absolute path, size and modification time of each window image, so they act as a cache only on the original machine; elsewhere they are a complete record of model outputs. |
 

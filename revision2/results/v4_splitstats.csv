@@ -1,0 +1,5 @@
+group,n_games,n_clips,mean_duration_s,glitch_free_share,multi_share,glitches_per_clip,mean_coverage,short_share_lt50,top_genres
+dev_12_games,12,445,18.89,0.1955,0.02921,0.8337,0.5187,0.5196,Action 71%; Simulation 22%; RPG 7%
+test_12_games,12,383,18.04,0.1984,0.03394,0.8486,0.4942,0.5309,Action 77%; RPG 16%; Simulation 8%
+unused_96_games,96,4410,19.23,0.2197,0.02063,0.8018,0.5065,0.519,Action 73%; Simulation 19%; RPG 5%
+all,120,5238,19.12,0.2161,0.02234,0.8079,0.5067,0.52,Action 73%; Simulation 19%; RPG 6%

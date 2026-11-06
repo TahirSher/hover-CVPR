@@ -83,6 +83,8 @@ python revision2/v3_controls.py                         # shuffled-description a
 python revision2/score_glide_clean.py --backbone internvl2.5-8b   # also qwen2.5-vl-3b, ui-tars-1.5-7b
 python revision2/score_full.py                          # full benchmark (all 5,238 clips)
 python revision2/v4_reviewer.py                         # multi-glitch clips, per-game results (cache only)
+python revision2/v4_split_stats.py --root /path/to/VideoGlitchBench   # are our 24 games representative?
+python revision2/v4_timing_ci.py                        # timing intervals for all backbones (per-clip logs)
 python revision2/human_agreement.py && python revision2/human_methods.py   # human check
 ```
 
