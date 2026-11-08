@@ -1,0 +1,5 @@
+split,clips,released_descriptions,released_spanless,evaluator_glitches,released_no_bugs_true,released_flagged_without_description,released_no_bugs_true_with_description,evaluator_glitch_free,evaluator_free_true_negative,evaluator_free_flagged,evaluator_free_spanless_only,multi_released,multi_evaluator,recall_cap_evaluator,recall_cap_released
+all,5238,4252,20,4232,521,606,13,1132,508,606,18,119,117,0.970227,0.969897
+dev,445,372,1,371,49,39,2,87,47,39,1,13,13,0.96496,0.965054
+test,383,327,2,325,46,32,3,76,43,32,1,14,13,0.944615,0.941896
+train,4410,3553,17,3536,426,535,8,969,418,535,16,92,91,0.973133,0.972981

@@ -10,7 +10,7 @@ best-supported hypothesis and a whole-clip span) is the paper's training-free ba
 
 | File | Contents |
 |---|---|
-| `HOVER_CVPR2027_revised.zip` | Submission sources: `main.tex`, `supp.tex`, sections, tables, figures, the data every number is read from (`data/`), and the scripts that regenerate tables and figures. Includes `main.pdf` and `supp.pdf` built with pdfLaTeX. Its own `README.md` gives the build order and the list of changes of all revisions (the third adds the human check, the clean GliDe re-runs and the full benchmark; the pre-submission round adds Prop. 1 under Hungarian matching, multi-glitch, per-game and budget checks; the final round adds same-session timing, the video-grounded human check and the CVPR 2027 LLM Usage Statement). |
+| `HOVER_CVPR2027_revised.zip` | Submission sources: `main.tex`, `supp.tex`, sections, tables, figures, the data every number is read from (`data/`), and the scripts that regenerate tables and figures. Includes `main.pdf` and `supp.pdf` built with pdfLaTeX. Its own `README.md` gives the build order and the list of changes of all revisions (the third adds the human check, the clean GliDe re-runs and the full benchmark; the pre-submission round adds Prop. 1 under Hungarian matching, multi-glitch, per-game and budget checks; the final round adds same-session timing, the video-grounded human check and the CVPR 2027 LLM Usage Statement; the last round reconciles the agent's report rate with the published system, adds output-policy controls, an audit of the released annotations, and moves the video check into the main paper). |
 | `author-kit-CVPR2027-v1-latex (1).zip` | The unmodified CVPR 2027 LaTeX author kit. |
 
 ## Method and analysis code
