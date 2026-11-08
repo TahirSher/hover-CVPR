@@ -87,6 +87,7 @@ python revision2/v4_split_stats.py --root /path/to/VideoGlitchBench   # are our 
 python revision2/v4_timing_ci.py                        # timing intervals for all backbones (per-clip logs)
 python revision2/v4_timing_paired_stats.py --per_clip revision2/results/v4_timing_paired_per_clip.csv   # same-session timing
 python revision2/human_agreement.py && python revision2/human_methods.py   # human check
+python revision2/analyze_video_ratings.py --per_report revision2/results/v4_video_ratings_per_report.csv   # video-grounded human check
 ```
 
 The raw outputs these read (stage H outputs, full-benchmark outputs, clean GliDe re-runs) are in

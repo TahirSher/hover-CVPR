@@ -1,0 +1,151 @@
+row_id,clip,game,backbone,system,gt_has_glitch,R1,R2,R3,llama,qwen72b
+1,pgs4mu,Dishonored 2,qwen2.5-vl-3b,glide,1,,1.0,4.0,4,1
+2,pgs4mu,Dishonored 2,qwen2.5-vl-3b,core,1,,1.0,4.0,0,1
+3,439rsr,Skate 3,qwen2.5-vl-3b,core,1,,4.0,5.0,4,4
+4,439rsr,Skate 3,qwen2.5-vl-3b,glide,1,,4.0,5.0,4,3
+5,70gckc,Destiny 2,qwen2.5-vl-3b,glide,1,2.0,,5.0,4,0
+6,70gckc,Destiny 2,qwen2.5-vl-3b,core,1,3.0,,4.0,3,0
+7,dxmkx9,Star Wars Jedi - Fallen Order,qwen2.5-vl-3b,glide,1,,4.0,5.0,4,0
+8,dxmkx9,Star Wars Jedi - Fallen Order,qwen2.5-vl-3b,core,1,,2.0,5.0,4,1
+9,2skrjy,The Elder Scrolls V - Skyrim,qwen2.5-vl-3b,glide,1,2.0,,5.0,4,1
+10,2skrjy,The Elder Scrolls V - Skyrim,qwen2.5-vl-3b,core,1,5.0,,5.0,4,1
+11,4ezs5o,Dark Souls III,qwen2.5-vl-3b,glide,1,0.0,,3.0,4,0
+12,4ezs5o,Dark Souls III,qwen2.5-vl-3b,core,1,0.0,,3.0,1,0
+13,3xq7z6,Counter-Strike - Global Offensive,qwen2.5-vl-3b,core,1,,5.0,1.0,1,1
+14,fswu4j,Assassin's Creed II,qwen2.5-vl-3b,glide,1,3.0,,5.0,4,1
+15,fswu4j,Assassin's Creed II,qwen2.5-vl-3b,core,1,3.0,,4.0,4,1
+16,8yilca,Wreckfest,qwen2.5-vl-3b,glide,1,2.0,4.0,,4,3
+17,8yilca,Wreckfest,qwen2.5-vl-3b,core,1,2.0,3.0,,4,1
+18,1w5doy,Skate 3,qwen2.5-vl-3b,core,0,,5.0,5.0,0,0
+19,969j16,Wreckfest,qwen2.5-vl-3b,core,0,0.0,,4.0,0,0
+20,969j16,Wreckfest,qwen2.5-vl-3b,glide,0,0.0,,4.0,0,0
+21,2yj7e8,Dying Light,qwen2.5-vl-3b,glide,0,,2.0,4.0,0,0
+22,2yj7e8,Dying Light,qwen2.5-vl-3b,core,0,,3.0,5.0,0,0
+23,414eqw,Skate 3,qwen2.5-vl-7b,glide,1,,4.0,5.0,3,3
+24,414eqw,Skate 3,qwen2.5-vl-7b,core,1,,4.0,5.0,4,4
+25,8vad2h,Wreckfest,qwen2.5-vl-7b,core,1,,3.0,4.0,3,1
+26,8vad2h,Wreckfest,qwen2.5-vl-7b,glide,1,,5.0,5.0,4,4
+27,8vad2h,Wreckfest,qwen2.5-vl-7b,glide,1,,4.0,5.0,4,1
+28,79donc,Destiny 2,qwen2.5-vl-7b,core,1,3.0,4.0,,3,0
+29,79donc,Destiny 2,qwen2.5-vl-7b,glide,1,2.0,2.0,,4,1
+30,79donc,Destiny 2,qwen2.5-vl-7b,glide,1,2.0,2.0,,4,1
+31,4juu6r,Dark Souls III,qwen2.5-vl-7b,core,1,0.0,0.0,,1,0
+32,65owpc,EA Sports UFC 2,qwen2.5-vl-7b,core,1,,5.0,5.0,4,4
+33,65owpc,EA Sports UFC 2,qwen2.5-vl-7b,glide,1,,4.0,5.0,4,4
+34,29dasz,The Elder Scrolls V - Skyrim,qwen2.5-vl-7b,glide,1,2.0,,2.0,3,0
+35,29dasz,The Elder Scrolls V - Skyrim,qwen2.5-vl-7b,glide,1,2.0,,4.0,3,1
+36,29dasz,The Elder Scrolls V - Skyrim,qwen2.5-vl-7b,glide,1,4.0,,5.0,3,1
+37,29dasz,The Elder Scrolls V - Skyrim,qwen2.5-vl-7b,glide,1,3.0,,5.0,4,1
+38,29dasz,The Elder Scrolls V - Skyrim,qwen2.5-vl-7b,core,1,4.0,,4.0,4,3
+39,pio05v,Dishonored 2,qwen2.5-vl-7b,glide,1,0.0,1.0,,1,0
+40,pio05v,Dishonored 2,qwen2.5-vl-7b,core,1,3.0,0.0,,4,0
+41,ih300y,Assassin's Creed Rogue,qwen2.5-vl-7b,core,1,0.0,,0.0,4,1
+42,2urfsx,Dying Light,qwen2.5-vl-7b,glide,1,1.0,1.0,,4,1
+43,2urfsx,Dying Light,qwen2.5-vl-7b,core,1,2.0,0.0,,0,0
+44,e0eg8r,Star Wars Jedi - Fallen Order,qwen2.5-vl-7b,glide,0,0.0,0.0,,0,0
+45,e0eg8r,Star Wars Jedi - Fallen Order,qwen2.5-vl-7b,core,0,1.0,1.0,,0,0
+46,2vdkki,Skate 3,qwen2.5-vl-7b,glide,0,1.0,,5.0,0,0
+47,2vdkki,Skate 3,qwen2.5-vl-7b,core,0,2.0,,0.0,0,0
+48,8qagua,Wreckfest,qwen2.5-vl-7b,core,0,0.0,1.0,,0,0
+49,8qagua,Wreckfest,qwen2.5-vl-7b,glide,0,0.0,1.0,,0,0
+50,8qagua,Wreckfest,qwen2.5-vl-7b,glide,0,1.0,1.0,,0,0
+51,dwnu7y,Star Wars Jedi - Fallen Order,internvl2.5-4b,core,1,2.0,,5.0,4,4
+52,dwnu7y,Star Wars Jedi - Fallen Order,internvl2.5-4b,glide,1,2.0,,0.0,1,0
+53,2v387n,Dying Light,internvl2.5-4b,glide,1,1.0,3.0,,4,1
+54,2v387n,Dying Light,internvl2.5-4b,core,1,3.0,3.0,,4,1
+55,4awryw,EA Sports UFC 2,internvl2.5-4b,core,1,3.0,1.0,,4,3
+56,4awryw,EA Sports UFC 2,internvl2.5-4b,glide,1,0.0,1.0,,3,1
+57,3yffv6,Counter-Strike - Global Offensive,internvl2.5-4b,glide,1,3.0,3.0,,4,1
+58,3yffv6,Counter-Strike - Global Offensive,internvl2.5-4b,core,1,4.0,3.0,,4,3
+59,do7rnc,Assassin's Creed II,internvl2.5-4b,glide,1,1.0,1.0,,3,0
+60,do7rnc,Assassin's Creed II,internvl2.5-4b,core,1,2.0,1.0,,4,1
+61,33dfwb,Assassin's Creed Rogue,internvl2.5-4b,glide,1,0.0,,0.0,0,0
+62,33dfwb,Assassin's Creed Rogue,internvl2.5-4b,core,1,0.0,,5.0,2,1
+63,33dfwb,Assassin's Creed Rogue,internvl2.5-4b,glide,1,0.0,,0.0,4,1
+64,pr05xh,Dishonored 2,internvl2.5-4b,glide,1,,3.0,4.0,4,1
+65,pr05xh,Dishonored 2,internvl2.5-4b,glide,1,,2.0,4.0,1,1
+66,pr05xh,Dishonored 2,internvl2.5-4b,glide,1,,0.0,3.0,1,0
+67,pr05xh,Dishonored 2,internvl2.5-4b,core,1,,3.0,4.0,4,1
+68,pr05xh,Dishonored 2,internvl2.5-4b,glide,1,,0.0,0.0,0,0
+69,2l4rnm,Wreckfest,internvl2.5-4b,glide,1,2.0,1.0,,4,1
+70,2l4rnm,Wreckfest,internvl2.5-4b,core,1,3.0,4.0,,4,4
+71,7ai2dk,Destiny 2,internvl2.5-4b,glide,1,,4.0,5.0,4,1
+72,7ai2dk,Destiny 2,internvl2.5-4b,core,1,,4.0,5.0,3,0
+73,dzt046,Star Wars Jedi - Fallen Order,internvl2.5-4b,glide,0,2.0,1.0,,0,0
+74,dzt046,Star Wars Jedi - Fallen Order,internvl2.5-4b,core,0,3.0,1.0,,0,0
+75,9i1qr9,Wreckfest,internvl2.5-4b,core,0,3.0,2.0,,0,0
+76,9i1qr9,Wreckfest,internvl2.5-4b,glide,0,2.0,2.0,,0,0
+77,7f74dz,Destiny 2,internvl2.5-4b,glide,0,0.0,,5.0,0,0
+78,7f74dz,Destiny 2,internvl2.5-4b,glide,0,5.0,,5.0,0,0
+79,7f74dz,Destiny 2,internvl2.5-4b,core,0,2.0,,2.0,0,0
+80,2rh7pw,Wreckfest,internvl2.5-8b,core,1,2.0,5.0,,4,4
+81,2rh7pw,Wreckfest,internvl2.5-8b,glide,1,3.0,5.0,,4,4
+82,2um7mz,The Elder Scrolls V - Skyrim,internvl2.5-8b,glide,1,,0.0,4.0,4,0
+83,2um7mz,The Elder Scrolls V - Skyrim,internvl2.5-8b,core,1,,4.0,5.0,4,2
+84,2um7mz,The Elder Scrolls V - Skyrim,internvl2.5-8b,glide,1,,0.0,5.0,4,1
+85,cnfspp,Dishonored 2,internvl2.5-8b,glide,1,2.0,2.0,,4,0
+86,cnfspp,Dishonored 2,internvl2.5-8b,core,1,3.0,1.0,,1,0
+87,cnfspp,Dishonored 2,internvl2.5-8b,glide,1,3.0,0.0,,3,0
+88,cnfspp,Dishonored 2,internvl2.5-8b,glide,1,1.0,2.0,,4,0
+89,b219hy,Assassin's Creed Rogue,internvl2.5-8b,core,1,,4.0,3.0,4,4
+90,b219hy,Assassin's Creed Rogue,internvl2.5-8b,glide,1,,4.0,5.0,4,4
+91,4f07gq,Dark Souls III,internvl2.5-8b,glide,1,0.0,1.0,,2,0
+92,4f07gq,Dark Souls III,internvl2.5-8b,glide,1,2.0,4.0,,4,2
+93,4f07gq,Dark Souls III,internvl2.5-8b,core,1,2.0,1.0,,4,3
+94,7c79zc,Destiny 2,internvl2.5-8b,core,1,2.0,4.0,,4,4
+95,7c79zc,Destiny 2,internvl2.5-8b,glide,1,2.0,1.0,,3,1
+96,2uc1nc,Dying Light,internvl2.5-8b,core,1,2.0,,5.0,4,1
+97,2uc1nc,Dying Light,internvl2.5-8b,glide,1,2.0,,5.0,2,0
+98,2uc1nc,Dying Light,internvl2.5-8b,glide,1,4.0,,5.0,1,0
+99,dxc2vz,Star Wars Jedi - Fallen Order,internvl2.5-8b,core,1,0.0,,4.0,1,0
+100,dxc2vz,Star Wars Jedi - Fallen Order,internvl2.5-8b,glide,1,2.0,,2.0,1,0
+101,2r256v,Skate 3,internvl2.5-8b,core,1,2.0,,4.0,3,0
+102,2r256v,Skate 3,internvl2.5-8b,glide,1,2.0,,5.0,4,4
+103,2r256v,Skate 3,internvl2.5-8b,glide,1,2.0,,0.0,1,0
+104,8ecda1,EA Sports UFC 2,internvl2.5-8b,core,0,3.0,5.0,,0,0
+105,8ecda1,EA Sports UFC 2,internvl2.5-8b,glide,0,3.0,4.0,,0,0
+106,2vclrz,Dying Light,internvl2.5-8b,glide,0,,1.0,3.0,0,0
+107,2vclrz,Dying Light,internvl2.5-8b,glide,0,,1.0,4.0,0,0
+108,2vclrz,Dying Light,internvl2.5-8b,core,0,,1.0,3.0,0,0
+109,dx4ygp,Star Wars Jedi - Fallen Order,internvl2.5-8b,core,0,2.0,4.0,,0,0
+110,dx4ygp,Star Wars Jedi - Fallen Order,internvl2.5-8b,glide,0,2.0,1.0,,0,0
+111,dx4ygp,Star Wars Jedi - Fallen Order,internvl2.5-8b,glide,0,0.0,0.0,,0,0
+112,2u2x48,Dying Light,ui-tars-1.5-7b,glide,1,3.0,,5.0,4,4
+113,2u2x48,Dying Light,ui-tars-1.5-7b,glide,1,2.0,,0.0,1,1
+114,2u2x48,Dying Light,ui-tars-1.5-7b,glide,1,0.0,,2.0,4,1
+115,2u2x48,Dying Light,ui-tars-1.5-7b,core,1,4.0,,5.0,4,4
+116,hmdz6w,Assassin's Creed II,ui-tars-1.5-7b,core,1,2.0,,4.0,1,0
+117,hmdz6w,Assassin's Creed II,ui-tars-1.5-7b,glide,1,3.0,,4.0,4,1
+118,32zfgn,Counter-Strike - Global Offensive,ui-tars-1.5-7b,glide,1,,1.0,4.0,4,1
+119,32zfgn,Counter-Strike - Global Offensive,ui-tars-1.5-7b,core,1,,1.0,4.0,4,0
+120,dxftt6,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,1,,0.0,0.0,0,0
+121,dxftt6,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,core,1,,0.0,4.0,0,0
+122,dxftt6,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,1,,0.0,3.0,4,1
+123,dxftt6,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,1,,0.0,2.0,4,0
+124,dxftt6,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,1,,0.0,0.0,0,0
+125,2gvj9m,The Elder Scrolls V - Skyrim,ui-tars-1.5-7b,glide,1,2.0,0.0,,4,1
+126,2gvj9m,The Elder Scrolls V - Skyrim,ui-tars-1.5-7b,core,1,0.0,0.0,,4,0
+127,2gvj9m,The Elder Scrolls V - Skyrim,ui-tars-1.5-7b,glide,1,3.0,0.0,,0,0
+128,765v72,Dark Souls III,ui-tars-1.5-7b,glide,1,4.0,,5.0,2,1
+129,765v72,Dark Souls III,ui-tars-1.5-7b,glide,1,0.0,,3.0,2,1
+130,765v72,Dark Souls III,ui-tars-1.5-7b,core,1,0.0,,5.0,1,1
+131,40e55n,Skate 3,ui-tars-1.5-7b,core,1,,4.0,5.0,4,2
+132,40e55n,Skate 3,ui-tars-1.5-7b,glide,1,,2.0,3.0,1,1
+133,40e55n,Skate 3,ui-tars-1.5-7b,glide,1,,3.0,5.0,4,4
+134,7ehmql,Destiny 2,ui-tars-1.5-7b,glide,1,,1.0,1.0,4,4
+135,7ehmql,Destiny 2,ui-tars-1.5-7b,glide,1,,0.0,5.0,3,0
+136,7ehmql,Destiny 2,ui-tars-1.5-7b,core,1,,4.0,4.0,3,3
+137,7ehmql,Destiny 2,ui-tars-1.5-7b,glide,1,,1.0,4.0,4,1
+138,4pzefe,Wreckfest,ui-tars-1.5-7b,core,1,3.0,,4.0,4,3
+139,4pzefe,Wreckfest,ui-tars-1.5-7b,glide,1,3.0,,5.0,4,4
+140,4f98zc,Dark Souls III,ui-tars-1.5-7b,core,0,,1.0,5.0,0,0
+141,4f98zc,Dark Souls III,ui-tars-1.5-7b,glide,0,,1.0,0.0,0,0
+142,4f98zc,Dark Souls III,ui-tars-1.5-7b,glide,0,,1.0,2.0,0,0
+143,4f98zc,Dark Souls III,ui-tars-1.5-7b,glide,0,,1.0,5.0,0,0
+144,37qtto,The Elder Scrolls V - Skyrim,ui-tars-1.5-7b,glide,0,2.0,3.0,,0,0
+145,37qtto,The Elder Scrolls V - Skyrim,ui-tars-1.5-7b,core,0,2.0,3.0,,0,0
+146,dy2pcj,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,0,2.0,,4.0,0,0
+147,dy2pcj,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,0,0.0,,3.0,0,0
+148,dy2pcj,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,0,0.0,,3.0,0,0
+149,dy2pcj,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,glide,0,0.0,,4.0,0,0
+150,dy2pcj,Star Wars Jedi - Fallen Order,ui-tars-1.5-7b,core,0,0.0,,4.0,0,0
