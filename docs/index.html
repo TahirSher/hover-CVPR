@@ -96,6 +96,15 @@ footer{padding:28px 0 40px;font-size:.85rem;color:#7a7a7a;text-align:center}
 .hyp.sel{background:#fffbea}
 .win.pick{box-shadow:inset 0 0 0 2px #fff,0 0 0 2px #363636}
 .chart rect[data-i]{cursor:pointer}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.8rem;color:#4a4a4a;margin:8px 0 2px}
+.legend span{white-space:nowrap}
+.legend i{display:inline-block;width:16px;height:10px;margin-right:6px;vertical-align:-1px}
+.legend i.ln{width:2px;height:13px;vertical-align:-2px}
+.legend i.gtl{width:12px;background:none;border-left:1px dashed #c62828;border-right:1px dashed #c62828}
+.legend i.out{background:#ededed;box-shadow:0 0 0 2px #222;width:12px}
+.cmp{margin:22px auto 0;max-width:900px}
+.cmp td{white-space:normal;text-align:left;vertical-align:top}
+.cmp th{text-align:left}
 button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #3273dc;outline-offset:2px}
 </style>
 </head>
@@ -116,12 +125,13 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
       <video id="vid1" src="videos/skyrim.mp4" poster="videos/skyrim.jpg" muted playsinline controls preload="metadata"></video>
       <div class="tabs" role="group" aria-label="Method">
         <button data-sys="gli" aria-pressed="true">GliDe (re-run)</button>
-        <button data-sys="core" aria-pressed="false">Core (ours)</button>
         <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
+        <button data-sys="core" aria-pressed="false">Core (ours)</button>
       </div>
       <div class="status" id="now1"></div>
       <div class="selbox" id="sel1">Click a coloured interval to play it and see its prediction.</div>
       <div class="lanes" id="tl"></div>
+      <div class="legend" id="leg1"></div>
       <div class="reports" id="reports"></div>
       <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. Our core emits one report with a whole-clip span (IoU 0.51); HOVER emits the same description with IoU 0.83. Click a coloured interval to play it and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
     </figure>
@@ -143,15 +153,30 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
       <figcaption><b>Figure 2.</b> Overview of the HOVER pipeline. <b>H</b>: a frozen VLM describes each two-second window and positive observations are grouped into support-ranked, entity-anchored hypotheses. <b>V</b>: each hypothesis is verified with yes/no questions on every window, calibrated to log-odds. <b>S</b>: an exact dynamic program finds the span. <b>U</b>: a fractional-response model predicts each hypothesis' contribution to F1&times;IoU and only those above a threshold are emitted. The core is stage H followed by the top-1 hypothesis with a whole-clip span.</figcaption>
     </figure>
 
+    <h3>Core vs. HOVER: what is the difference?</h3>
+    <p class="justify">Both methods share stage <b>H</b>: the VLM describes every two-second window and the positive observations are resolved into events. The <b>core</b> stops there. It reports the best-supported event once, with a span covering the whole clip, and makes no further VLM calls. <b>HOVER</b> is the full pipeline. <b>V</b> asks the VLM again about each event on every window, <b>S</b> uses these scores to cut a tighter span, and <b>U</b> decides how many events to report from their predicted utility. HOVER can therefore localise the glitch more precisely (IoU 0.83 vs. 0.51 in Figure 1), but it costs more time, and with today's weak window evidence it does not raise the score: across the five backbones it stays within 0.74 points of the core. We therefore propose the core as the baseline and keep HOVER as the diagnostic of what the further stages can add.</p>
+    <div class="tw cmp"><table>
+      <thead><tr><th></th><th>Core (ours)</th><th>HOVER (ours)</th></tr></thead>
+      <tbody>
+        <tr><td>Stages</td><td>H, then top-1 event</td><td>H, V, S, U</td></tr>
+        <tr><td>Reports per clip</td><td>always one</td><td>those above the utility threshold t*</td></tr>
+        <tr><td>Span</td><td>whole clip</td><td>found by S from the window scores</td></tr>
+        <tr><td>VLM calls</td><td>one per window</td><td>one per window, plus yes/no questions for every event on every window (V)</td></tr>
+        <tr><td>Time per clip (5 backbones)</td><td>19.6&ndash;23.1 s</td><td>22.6&ndash;32.2 s</td></tr>
+        <tr><td>F1&times;IoU on test</td><td colspan="2" style="text-align:center">within 0.74 points of each other on every backbone</td></tr>
+      </tbody>
+    </table></div>
+
     <h3>The core on two test clips</h3>
     <p>Choose a clip and step through the pipeline. All windows, hypotheses, support counts, verification scores, spans and utilities below are the outputs of our test run. While the video plays, the outlined cell is the window on screen. Click a window to play that interval, or click a hypothesis to play the windows that support it.</p>
     <div class="tabs" role="group" aria-label="Clip">
-      <button data-clip="bus" aria-pressed="true">Wreckfest (InternVL2.5-8B)</button>
-      <button data-clip="sky" aria-pressed="false">Skyrim (Qwen2.5-VL-7B)</button>
+      <button data-clip="bus" aria-pressed="true">Game (1) &ndash; Wreckfest (InternVL2.5-8B)</button>
+      <button data-clip="sky" aria-pressed="false">Game (2) &ndash; Skyrim (Qwen2.5-VL-7B)</button>
     </div>
     <video id="vid2" muted playsinline controls preload="metadata" style="width:100%;max-width:720px;display:block;margin:0 auto;background:#000"></video>
     <div class="windows" id="wins"></div>
     <div class="wl" id="wlab"></div>
+    <div class="legend" id="wleg"></div>
     <div class="selbox" id="sel2">Click a window to play those two seconds and see what the model reported there.</div>
     <div class="tabs" role="group" aria-label="Step">
       <button data-step="0" aria-pressed="true">1. Describe windows</button>
@@ -264,6 +289,8 @@ function drawTL(){
   for(const k of ['gli','hov','core']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
   h+=`<div class="axis"><span></span><div class="ticks">${[0,10,20,30,40].map(t=>`<span style="left:${pct(t)}">${t} s</span>`).join('')}</div><span></span></div>`;
   document.getElementById('tl').innerHTML=h;
+  const nm={gli:'GliDe (re-run)',hov:'HOVER (ours)',core:'Core (ours)'};
+  document.getElementById('leg1').innerHTML=`<span><i style="background:${SYS[sys].color}"></i>selected method: ${nm[sys]}</span><span><i style="background:#888;opacity:.35"></i>light: other methods (click a tab or interval)</span><span><i style="background:${C.gt}"></i>ground-truth glitch</span><span><i class="gtl"></i>ground-truth boundaries</span><span><i class="ln" style="background:#222"></i>current video time</span>`;
   document.getElementById('reports').innerHTML=`<div data-lane="gt" class="${selLane==='gt'?'sel':''}" title="Click to play"><span class="who">Ground truth (16&ndash;41 s):</span> The players' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.</div>`+
     SYS[sys].lanes.map((L,j)=>`<div data-lane="${sys}:${j}" class="${selLane===sys+':'+j?'sel':''}" title="Click to play all of its intervals"><span class="who">${L.lab} (${L.spans.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(', ')}):</span> ${L.txt}</div>`).join('');
   tick1();
@@ -286,7 +313,7 @@ drawTL();
 /* metric example */
 function drawCalc(){
   const r=+document.getElementById('rr').value;document.getElementById('rv').textContent=r;
-  const rows=[['GliDe (re-run)',C.gli,4,.80],['Core (ours)',C.core,1,.51],['HOVER (ours)',C.hov,1,.83]];
+  const rows=[['GliDe (re-run)',C.gli,4,.80],['HOVER (ours)',C.hov,1,.83],['Core (ours)',C.core,1,.51]];
   const mx=2*5*.83/(5*2); // HOVER at r = 5, the largest value the slider can produce
   document.getElementById('calc').innerHTML=rows.map(([n,c,N,iou])=>{const s=2*r*iou/(5*(N+1));return `<div class="ubar"><span>${n}</span><div class="b"><i style="width:${Math.min(100,100*s/mx).toFixed(1)}%;background:${c}"></i></div><span>${(100*s).toFixed(1)}</span></div><div style="font-size:.8rem;color:#7a7a7a;margin:-2px 0 4px 120px">2&middot;${r}&middot;${iou.toFixed(2)} / (5&middot;(${N}+1)), ${N} report${N>1?'s':''}</div>`}).join('');
 }
@@ -373,6 +400,12 @@ function step(k){
   [...wins.children].forEach((w,i)=>{const h=hypOf(c,i);w.textContent='';
     w.style.background=h<0?'#ededed':k===0?'#4a4a4a':k===1?HC[h]:(h===0?C.h1:'#ededed');
     if(k>=1&&h>=0&&(k===1||h===0))w.textContent=h+1;});
+  const sw=(c,t)=>`<span><i style="background:${c}"></i>${t}</span>`,lt='#ededed';
+  document.getElementById('wleg').innerHTML=(k===0?sw('#4a4a4a','dark: the model reported a glitch in this window')+sw(lt,'light: no glitch reported')
+    :k===1?c.hyps.map((h,j)=>sw(HC[j],`hypothesis ${j+1} (support ${h.m.length})`)).join('')+sw(lt,'light: no glitch reported')
+    :sw(C.h1,'windows of hypothesis 1, the reported event')+sw(lt,'light: windows not used for the report'))
+    +(k===3?sw(C.hov,'green bar: score above &#964;, kept by S')+sw(C.grey,'grey bar: score below &#964;'):'')
+    +'<span><i class="out"></i>outlined: window on screen</span>';
   tick2();
   profEl.hidden=k!==3;if(k===3)profEl.innerHTML=profSVG(c);
   document.getElementById('stage').innerHTML=ST[k](c);
