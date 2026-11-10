@@ -105,6 +105,15 @@ footer{padding:28px 0 40px;font-size:.85rem;color:#7a7a7a;text-align:center}
 .cmp{margin:22px auto 0;max-width:900px}
 .cmp td{white-space:normal;text-align:left;vertical-align:top}
 .cmp th{text-align:left}
+.container.wide{max-width:1320px}
+.side{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:28px;align-items:start}
+#core-vs-hover{background:#f5f5f5;padding:18px 20px;font-size:.92rem}
+#core-vs-hover h2{font-size:1.3rem;text-align:left;margin-bottom:12px}
+#core-vs-hover .cmp{margin-top:14px}
+#core-vs-hover table{font-size:.82rem}
+#core-vs-hover th,#core-vs-hover td{padding:5px 6px}
+#method{border-top:1px solid #e5e5e5}
+@media (max-width:1000px){.side{grid-template-columns:minmax(0,1fr)}}
 button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #3273dc;outline-offset:2px}
 </style>
 </head>
@@ -127,7 +136,8 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 </section>
 
 <section class="section" id="teaser">
-  <div class="container">
+  <div class="container wide">
+   <div class="side">
     <figure class="teaser">
       <video id="vid1" src="videos/skyrim.mp4" poster="videos/skyrim.jpg" muted playsinline controls preload="metadata"></video>
       <div class="tabs" role="group" aria-label="Method">
@@ -136,17 +146,13 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
         <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
       </div>
       <div class="status" id="now1"></div>
-      <div class="selbox" id="sel1">Click a coloured interval to play it and see its prediction.</div>
+      <div class="selbox" id="sel1">Click anywhere on a coloured interval: the video plays from that point to the end of the interval and its prediction appears here.</div>
       <div class="lanes" id="tl"></div>
       <div class="legend" id="leg1"></div>
       <div class="reports" id="reports"></div>
-      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. Our core emits one report with a whole-clip span (IoU 0.51); HOVER emits the same description with IoU 0.83. Click a coloured interval to play it and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
+      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. Our core emits one report with a whole-clip span (IoU 0.51); HOVER emits the same description with IoU 0.83. Click a point on a coloured interval to play from there to the end of the interval and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
     </figure>
-  </div>
-</section>
-
-<section class="section gray" id="core-vs-hover">
-  <div class="container narrow">
+    <aside id="core-vs-hover">
     <h2>Core vs. HOVER: what is the difference?</h2>
     <p class="justify">Both methods run the same frozen vision-language model (VLM) and share stage <b>H</b>: the VLM describes every two-second window of the clip, and the windows that report a glitch are resolved into entity-anchored events, ranked by support, the number of windows that proposed them. They differ in what happens next.</p>
     <p class="justify"><b>Core (ours).</b> The core stops after stage H. It reports only the best-supported event, exactly once, and gives it a span that covers the whole clip. Both choices follow from the metric. Every report enters the denominator of F1&times;IoU, matched or not, and almost all clips contain at most one glitch, so a second report rarely pays for itself. About half of all windows lie inside a glitch, so a whole-clip span is already close to the best span. The core needs no training and no extra VLM calls, which makes it fast and easy to reproduce. This is the baseline we propose.</p>
@@ -160,7 +166,8 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
         <tr><td>VLM calls</td><td>one per window</td><td>one per window, plus yes/no questions for every event on every window (V)</td></tr>
       </tbody>
     </table></div>
-
+    </aside>
+   </div>
   </div>
 </section>
 
@@ -271,7 +278,7 @@ let sys='gli';
 const vid1=document.getElementById('vid1');
 function seek(v,t){v._own=true;try{v.currentTime=t}catch(e){}}
 /* play a list of [start,end] intervals and stop at the end of the last one */
-function playSegs(v,segs){v._segs=segs.map(x=>x.slice());v._i=0;seek(v,segs[0][0]);const p=v.play();if(p)p.catch(()=>{})}
+function playSegs(v,segs){v._segs=segs.map(x=>x.slice());v._i=0;const go=()=>{seek(v,v._segs?v._segs[0][0]:segs[0][0]);const p=v.play();if(p)p.catch(()=>{})};if(v.readyState>=1)go();else{v.addEventListener('loadedmetadata',go,{once:true});v.load()}}
 function segWatch(v){if(!v._segs)return;const b=v._segs[v._i][1];if(v.currentTime>=b-0.04){v._i++;if(v._i<v._segs.length)seek(v,v._segs[v._i][0]);else{v.pause();v._segs=null}}}
 function guard(v){v.addEventListener('seeking',()=>{if(!v._own)v._segs=null});v.addEventListener('seeked',()=>{v._own=false})}
 const fmt=x=>(Math.abs(x-48.67)<.01?'48.7':Math.abs(x-23.62)<.01?'23.6':(+x.toFixed(1)).toString());
@@ -281,12 +288,14 @@ function lane(lab,spans,color,val,faded,id){
   return `<div class="lane"><span class="l">${lab}</span><div class="track"><div class="gtb" style="left:${pct(GT[0])};width:${pct(GT[1]-GT[0])}"></div>${spans.map((s,j)=>`<div class="seg${faded?' faded':''}${selLane===id&&(selSpan===j||selSpan===null)?' sel':''}" data-lane="${id}" data-j="${j}" title="${lab}: ${fmt(s[0])}&ndash;${fmt(s[1])} s, click to play" style="left:${pct(s[0])};width:${pct(s[1]-s[0])};background:${color}"></div>`).join('')}<div class="ph"></div></div><span class="v">${val}</span></div>`;
 }
 function laneById(id){if(id==='gt')return{sys:null,L:{lab:'Ground truth',spans:[GT],iou:null,txt:'The players\' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.'}};const [k,j]=id.split(':');return{sys:k,L:SYS[k].lanes[+j]}}
-function selectInterval(id,j){
+function selectInterval(id,j,t0){
   const {sys:k,L}=laneById(id);
   if(k&&k!==sys){sys=k;document.querySelectorAll('[data-sys]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.sys===k))}
   selLane=id;selSpan=j;drawTL();
-  const segs=j===null?L.spans:[L.spans[j]];
-  document.getElementById('sel1').innerHTML=`<b>${L.lab}</b>, ${segs.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(' and ')}${L.iou!=null?' (IoU '+L.iou.toFixed(2)+')':''}: ${L.txt}`;
+  const segs=j===null?L.spans.map(x=>x.slice()):[L.spans[j].slice()];
+  if(t0!=null&&segs.length===1&&t0>segs[0][0]&&t0<segs[0][1]-0.3)segs[0][0]=t0; // start where the bar was clicked
+  const shown=j===null?L.spans:[L.spans[j]];
+  document.getElementById('sel1').innerHTML=`<b>${L.lab}</b>, ${shown.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(' and ')}${L.iou!=null?' (IoU '+L.iou.toFixed(2)+')':''}${segs[0][0]!==shown[0][0]?', playing from '+fmt(segs[0][0])+' s':''}: ${L.txt}`;
   playSegs(vid1,segs);
 }
 function drawTL(){
@@ -310,7 +319,7 @@ let r1=0;function loop1(){segWatch(vid1);tick1();if(!vid1.paused&&!vid1.ended)r1
 vid1.addEventListener('play',()=>{cancelAnimationFrame(r1);loop1()});
 ['seeked','timeupdate','loadedmetadata','pause'].forEach(e=>vid1.addEventListener(e,tick1));
 vid1.addEventListener('timeupdate',()=>segWatch(vid1));guard(vid1);
-document.getElementById('tl').addEventListener('click',e=>{const sg=e.target.closest('.seg');if(sg){selectInterval(sg.dataset.lane,+sg.dataset.j);return}const tr=e.target.closest('.track');if(!tr)return;const r=tr.getBoundingClientRect();seek(vid1,Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*D)});
+document.getElementById('tl').addEventListener('click',e=>{const sg=e.target.closest('.seg');if(sg){const r=sg.parentNode.getBoundingClientRect();selectInterval(sg.dataset.lane,+sg.dataset.j,Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*D);return}const tr=e.target.closest('.track');if(!tr)return;const r=tr.getBoundingClientRect();seek(vid1,Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*D)});
 document.getElementById('reports').addEventListener('click',e=>{const d=e.target.closest('[data-lane]');if(d)selectInterval(d.dataset.lane,null)});
 document.querySelectorAll('[data-sys]').forEach(b=>b.addEventListener('click',()=>{sys=b.dataset.sys;document.querySelectorAll('[data-sys]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawTL()}));
 drawTL();
