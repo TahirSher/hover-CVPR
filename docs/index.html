@@ -65,8 +65,8 @@ figcaption{font-size:.92rem;color:#4a4a4a;margin-top:8px}
 .stepbox h4{margin:0 0 8px;font-size:1.02rem;font-weight:600}
 .hyp{border-left:3px solid #ccc;padding:2px 0 2px 10px;margin:8px 0;font-size:.92rem}
 .hyp small{display:block;color:#7a7a7a}
-.ubar{display:grid;grid-template-columns:110px minmax(0,1fr) 54px;gap:10px;align-items:center;font-size:.85rem;margin:4px 0}
-.ubar .b{height:11px;background:#ededed;position:relative}
+.ubar{display:grid;grid-template-columns:120px minmax(0,1fr) 48px;gap:10px;align-items:center;font-size:.85rem;margin:4px 0}
+.ubar .b{height:11px;background:#ededed;position:relative;overflow:hidden;min-width:0}
 .ubar .b i{position:absolute;top:0;bottom:0;left:0}
 .ubar .b em{position:absolute;top:-3px;bottom:-3px;width:2px;background:#222}
 .chart svg{display:block;width:100%;height:auto}
@@ -254,8 +254,8 @@ drawTL();
 function drawCalc(){
   const r=+document.getElementById('rr').value;document.getElementById('rv').textContent=r;
   const rows=[['GliDe (re-run)',C.gli,4,.80],['Core (ours)',C.core,1,.51],['HOVER (ours)',C.hov,1,.83]];
-  const mx=.166;
-  document.getElementById('calc').innerHTML=rows.map(([n,c,N,iou])=>{const s=2*r*iou/(5*(N+1));return `<div class="ubar"><span>${n}</span><div class="b"><i style="width:${(100*s/mx).toFixed(1)}%;background:${c}"></i></div><span>${(100*s).toFixed(1)}</span></div><div style="font-size:.8rem;color:#7a7a7a;margin:-2px 0 4px 120px">2&middot;${r}&middot;${iou.toFixed(2)} / (5&middot;(${N}+1)), ${N} report${N>1?'s':''}</div>`}).join('');
+  const mx=2*5*.83/(5*2); // HOVER at r = 5, the largest value the slider can produce
+  document.getElementById('calc').innerHTML=rows.map(([n,c,N,iou])=>{const s=2*r*iou/(5*(N+1));return `<div class="ubar"><span>${n}</span><div class="b"><i style="width:${Math.min(100,100*s/mx).toFixed(1)}%;background:${c}"></i></div><span>${(100*s).toFixed(1)}</span></div><div style="font-size:.8rem;color:#7a7a7a;margin:-2px 0 4px 120px">2&middot;${r}&middot;${iou.toFixed(2)} / (5&middot;(${N}+1)), ${N} report${N>1?'s':''}</div>`}).join('');
 }
 document.getElementById('rr').addEventListener('input',drawCalc);drawCalc();
 
