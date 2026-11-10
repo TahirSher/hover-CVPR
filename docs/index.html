@@ -312,7 +312,7 @@ const ST=[
  c=>`<h4>Core: report the best-supported event once</h4><p>The core emits hypothesis 1 as the only report of the clip, with a whole-clip span (0&ndash;${c.D.toFixed(1)} s, IoU ${c.coreIoU.toFixed(2)}). ${c.hyps.length>1?'The other hypotheses are dropped. ':''}No further VLM calls are needed.</p><div class="hyp" style="border-color:${C.gt}"><small>Ground truth (${c.gt[0]}&ndash;${c.gt[1]} s)</small>${c.gtTxt}</div>`,
  c=>`<h4>HOVER: verification, segmentation and emission</h4><p><b>V</b> asks a yes/no question about hypothesis 1 on every window (bars above). <b>S</b> selects the windows above &#964; with a penalty for each change (${c.mode} mode, chosen on the development split), giving ${c.span[0].toFixed(1)}&ndash;${c.span[1].toFixed(1)} s and IoU ${c.hovIoU.toFixed(2)}. ${clip==='bus'?'Every window is above &#964;, so the span is the whole clip, as for the core.':'The span closes in on the launch.'} <b>U</b> predicts the utility of each hypothesis and emits those above the fitted threshold t* = ${c.tstar.toFixed(3)} (black mark):</p>`+
    c.hyps.map((h,k)=>`<div class="ubar"><span>Hypothesis ${k+1}: ${h.u>=c.tstar?'emit':'drop'}</span><div class="b"><i style="width:${Math.min(100,100*h.u/.3)}%;background:${HC[k]}"></i><em style="left:${100*c.tstar/.3}%"></em></div><span>${h.u.toFixed(3)}</span></div>`).join('')
-};
+];
 function step(k){
   cur=k;const c=CL[clip];
   document.querySelectorAll('[data-step]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.step===k));
