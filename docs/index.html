@@ -119,14 +119,21 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
   </div>
 </div>
 
+<section class="section gray" id="abstract">
+  <div class="container narrow">
+    <h2>Abstract</h2>
+    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We contribute a strong, efficient baseline and a diagnostic toolkit for this setting. First, a simple, training-free core for frozen vision-language models describes every two-second window, resolves the observations into entity-anchored events, and reports the best-supported event once with a whole-clip span. On five open backbones it significantly beats tracker-clean same-stack re-runs of the reference agent (four of five against the first re-runs), stays ahead when the agent's output is cut to its published report rate, and needs 4.8&ndash;11.3&times; less time and 3.6&ndash;8.4&times; fewer prompt tokens; a fuller pipeline with verification, segmentation and a learned emission rule adds nothing. Second, the toolkit explains why the agent falls behind: a closed-form emission rule shows that one report per clip is close to optimal under this metric, and the agent's own longest report with a whole-clip span closes most of the gap. Third, cheap controls separate perception from the metric's priors: whole-clip spans are nearly as good as any span, no method yet tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge, whereas human raters, from text and while watching the clips, rate the core's descriptions far above it and above the agent's reports. We will release the controls with all outputs, so that future systems can be measured against them at little cost.</p>
+  </div>
+</section>
+
 <section class="section" id="teaser">
   <div class="container">
     <figure class="teaser">
       <video id="vid1" src="videos/skyrim.mp4" poster="videos/skyrim.jpg" muted playsinline controls preload="metadata"></video>
       <div class="tabs" role="group" aria-label="Method">
         <button data-sys="gli" aria-pressed="true">GliDe (re-run)</button>
-        <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
         <button data-sys="core" aria-pressed="false">Core (ours)</button>
+        <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
       </div>
       <div class="status" id="now1"></div>
       <div class="selbox" id="sel1">Click a coloured interval to play it and see its prediction.</div>
@@ -138,10 +145,22 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
   </div>
 </section>
 
-<section class="section gray" id="abstract">
+<section class="section gray" id="core-vs-hover">
   <div class="container narrow">
-    <h2>Abstract</h2>
-    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We contribute a strong, efficient baseline and a diagnostic toolkit for this setting. First, a simple, training-free core for frozen vision-language models describes every two-second window, resolves the observations into entity-anchored events, and reports the best-supported event once with a whole-clip span. On five open backbones it significantly beats tracker-clean same-stack re-runs of the reference agent (four of five against the first re-runs), stays ahead when the agent's output is cut to its published report rate, and needs 4.8&ndash;11.3&times; less time and 3.6&ndash;8.4&times; fewer prompt tokens; a fuller pipeline with verification, segmentation and a learned emission rule adds nothing. Second, the toolkit explains why the agent falls behind: a closed-form emission rule shows that one report per clip is close to optimal under this metric, and the agent's own longest report with a whole-clip span closes most of the gap. Third, cheap controls separate perception from the metric's priors: whole-clip spans are nearly as good as any span, no method yet tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge, whereas human raters, from text and while watching the clips, rate the core's descriptions far above it and above the agent's reports. We will release the controls with all outputs, so that future systems can be measured against them at little cost.</p>
+    <h2>Core vs. HOVER: what is the difference?</h2>
+    <p class="justify">Both methods run the same frozen vision-language model (VLM) and share stage <b>H</b>: the VLM describes every two-second window of the clip, and the windows that report a glitch are resolved into entity-anchored events, ranked by support, the number of windows that proposed them. They differ in what happens next.</p>
+    <p class="justify"><b>Core (ours).</b> The core stops after stage H. It reports only the best-supported event, exactly once, and gives it a span that covers the whole clip. Both choices follow from the metric. Every report enters the denominator of F1&times;IoU, matched or not, and almost all clips contain at most one glitch, so a second report rarely pays for itself. About half of all windows lie inside a glitch, so a whole-clip span is already close to the best span. The core needs no training and no extra VLM calls, which makes it fast and easy to reproduce. This is the baseline we propose.</p>
+    <p class="justify"><b>HOVER (ours).</b> HOVER is the full pipeline and tests whether more work on top of the core helps. <b>V</b> (verification) asks the VLM a yes/no question about each event on every window and calibrates the answers to log-odds, so that each event gets a score per window. <b>S</b> (segmentation) uses these scores to find the span with an exact dynamic program: it keeps the windows above a threshold &#964; and penalises every change between glitch and no glitch. <b>U</b> (utility) predicts how much each event would add to F1&times;IoU and emits only the events above a fitted threshold t*, so a clip can receive zero, one or several reports. HOVER can therefore localise the glitch more tightly (IoU 0.83 instead of 0.51 in Figure 1) and stay silent on clips it doubts. With today's weak window evidence, however, these stages do not raise the score over the core, and they cost extra time.</p>
+    <div class="tw cmp"><table>
+      <thead><tr><th></th><th>Core (ours)</th><th>HOVER (ours)</th></tr></thead>
+      <tbody>
+        <tr><td>Stages</td><td>H, then top-1 event</td><td>H, V, S, U</td></tr>
+        <tr><td>Reports per clip</td><td>always one</td><td>those above the utility threshold t*</td></tr>
+        <tr><td>Span</td><td>whole clip</td><td>found by S from the window scores</td></tr>
+        <tr><td>VLM calls</td><td>one per window</td><td>one per window, plus yes/no questions for every event on every window (V)</td></tr>
+      </tbody>
+    </table></div>
+
   </div>
 </section>
 
@@ -152,20 +171,6 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
       <img src="static/pipeline.jpg" alt="Overview of the HOVER pipeline with stages H, V, S and U" width="1800" height="993" loading="lazy">
       <figcaption><b>Figure 2.</b> Overview of the HOVER pipeline. <b>H</b>: a frozen VLM describes each two-second window and positive observations are grouped into support-ranked, entity-anchored hypotheses. <b>V</b>: each hypothesis is verified with yes/no questions on every window, calibrated to log-odds. <b>S</b>: an exact dynamic program finds the span. <b>U</b>: a fractional-response model predicts each hypothesis' contribution to F1&times;IoU and only those above a threshold are emitted. The core is stage H followed by the top-1 hypothesis with a whole-clip span.</figcaption>
     </figure>
-
-    <h3>Core vs. HOVER: what is the difference?</h3>
-    <p class="justify">Both methods share stage <b>H</b>: the VLM describes every two-second window and the positive observations are resolved into events. The <b>core</b> stops there. It reports the best-supported event once, with a span covering the whole clip, and makes no further VLM calls. <b>HOVER</b> is the full pipeline. <b>V</b> asks the VLM again about each event on every window, <b>S</b> uses these scores to cut a tighter span, and <b>U</b> decides how many events to report from their predicted utility. HOVER can therefore localise the glitch more precisely (IoU 0.83 vs. 0.51 in Figure 1), but it costs more time, and with today's weak window evidence it does not raise the score: across the five backbones it stays within 0.74 points of the core. We therefore propose the core as the baseline and keep HOVER as the diagnostic of what the further stages can add.</p>
-    <div class="tw cmp"><table>
-      <thead><tr><th></th><th>Core (ours)</th><th>HOVER (ours)</th></tr></thead>
-      <tbody>
-        <tr><td>Stages</td><td>H, then top-1 event</td><td>H, V, S, U</td></tr>
-        <tr><td>Reports per clip</td><td>always one</td><td>those above the utility threshold t*</td></tr>
-        <tr><td>Span</td><td>whole clip</td><td>found by S from the window scores</td></tr>
-        <tr><td>VLM calls</td><td>one per window</td><td>one per window, plus yes/no questions for every event on every window (V)</td></tr>
-        <tr><td>Time per clip (5 backbones)</td><td>19.6&ndash;23.1 s</td><td>22.6&ndash;32.2 s</td></tr>
-        <tr><td>F1&times;IoU on test</td><td colspan="2" style="text-align:center">within 0.74 points of each other on every backbone</td></tr>
-      </tbody>
-    </table></div>
 
     <h3>The core on two test clips</h3>
     <p>Choose a clip and step through the pipeline. All windows, hypotheses, support counts, verification scores, spans and utilities below are the outputs of our test run. While the video plays, the outlined cell is the window on screen. Click a window to play that interval, or click a hypothesis to play the windows that support it.</p>
@@ -286,7 +291,7 @@ function selectInterval(id,j){
 }
 function drawTL(){
   let h=lane('Ground truth',[GT],C.gt,'16&ndash;41 s',false,'gt');
-  for(const k of ['gli','hov','core']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
+  for(const k of ['gli','core','hov']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
   h+=`<div class="axis"><span></span><div class="ticks">${[0,10,20,30,40].map(t=>`<span style="left:${pct(t)}">${t} s</span>`).join('')}</div><span></span></div>`;
   document.getElementById('tl').innerHTML=h;
   const nm={gli:'GliDe (re-run)',hov:'HOVER (ours)',core:'Core (ours)'};
@@ -313,7 +318,7 @@ drawTL();
 /* metric example */
 function drawCalc(){
   const r=+document.getElementById('rr').value;document.getElementById('rv').textContent=r;
-  const rows=[['GliDe (re-run)',C.gli,4,.80],['HOVER (ours)',C.hov,1,.83],['Core (ours)',C.core,1,.51]];
+  const rows=[['GliDe (re-run)',C.gli,4,.80],['Core (ours)',C.core,1,.51],['HOVER (ours)',C.hov,1,.83]];
   const mx=2*5*.83/(5*2); // HOVER at r = 5, the largest value the slider can produce
   document.getElementById('calc').innerHTML=rows.map(([n,c,N,iou])=>{const s=2*r*iou/(5*(N+1));return `<div class="ubar"><span>${n}</span><div class="b"><i style="width:${Math.min(100,100*s/mx).toFixed(1)}%;background:${c}"></i></div><span>${(100*s).toFixed(1)}</span></div><div style="font-size:.8rem;color:#7a7a7a;margin:-2px 0 4px 120px">2&middot;${r}&middot;${iou.toFixed(2)} / (5&middot;(${N}+1)), ${N} report${N>1?'s':''}</div>`}).join('');
 }
