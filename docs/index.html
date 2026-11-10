@@ -355,7 +355,7 @@ const hypOf=(c,i)=>c.hyps.findIndex(h=>h.m.includes(i));
 function buildClip(){
   const c=CL[clip];
   vid2._segs=null;document.getElementById('sel2').innerHTML='Click a window to play those two seconds and see what the model reported there.';
-  vid2.pause();vid2.poster=c.poster;vid2.src=c.video;
+  vid2.pause();vid2.poster=c.poster;vid2.src=vidURL(c.video);
   wins.style.gridTemplateColumns=`repeat(${c.NW},minmax(0,1fr))`;
   wins.innerHTML=[...Array(c.NW)].map((_,i)=>`<div class="win" title="Window ${i+1}"></div>`).join('');
   document.getElementById('wlab').innerHTML=`<span>0 s</span><span>${c.NW} windows of 2 s</span><span>${c.D.toFixed(1)} s</span>`;
@@ -426,6 +426,25 @@ function step(k){
 }
 document.querySelectorAll('[data-step]').forEach(b=>b.addEventListener('click',()=>step(+b.dataset.step)));
 document.querySelectorAll('[data-clip]').forEach(b=>b.addEventListener('click',()=>{clip=b.dataset.clip;document.querySelectorAll('[data-clip]').forEach(x=>x.setAttribute('aria-pressed',x===b));buildClip();step(cur)}));
+/* Some hosts ignore byte-range requests, which makes a streamed video unseekable.
+   Load each clip once in full and play it from memory so any interval can be reached. */
+const VB={};
+const vidURL=u=>VB[u]||u;
+function swapSrc(v,b){const t=v.currentTime,pl=!v.paused;v.src=b;v.addEventListener('loadedmetadata',()=>{if(t>0)seek(v,t);if(pl){const p=v.play();if(p)p.catch(()=>{})}},{once:true})}
+function loadFull(name){
+  const url=`videos/${name}.mp4`,sc=document.createElement('script');
+  sc.src=`videos/${name}.b64.js`;sc.async=true;
+  sc.onload=()=>{try{
+    const d=window.VIDB64&&window.VIDB64[name];if(!d)return;
+    const bin=atob(d.replace(/[-_.~]/g,m=>({'-':'h','_':'H','.':'r','~':'R'})[m])),a=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);
+    delete window.VIDB64[name];
+    VB[url]=URL.createObjectURL(new Blob([a],{type:'video/mp4'}));
+    [vid1,vid2].forEach(v=>{if(v.getAttribute('src')===url)swapSrc(v,VB[url])});
+  }catch(e){}};
+  document.head.appendChild(sc);
+}
+loadFull('skyrim');loadFull('wreckfest-bus');
 buildClip();step(0);
 
 /* results tables */
