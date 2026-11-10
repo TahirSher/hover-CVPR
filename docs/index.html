@@ -83,6 +83,19 @@ td:first-child,th:first-child{text-align:left}
 input[type=range]{width:100%}
 pre{background:#f5f5f5;padding:14px;overflow-x:auto;font-size:.85rem;line-height:1.45}
 footer{padding:28px 0 40px;font-size:.85rem;color:#7a7a7a;text-align:center}
+
+.seg{cursor:pointer}
+.seg:hover{filter:brightness(.9);box-shadow:0 0 0 1px #363636}
+.seg.sel{box-shadow:0 0 0 2px #363636;z-index:1}
+.reports div[data-lane]{cursor:pointer;padding:3px 6px;margin-left:-6px;border-left:3px solid transparent}
+.reports div[data-lane]:hover{background:#f5f5f5}
+.reports div.sel{background:#fffbea;border-left-color:#363636}
+.selbox{font-size:.9rem;background:#fffbea;border:1px solid #f0e3a5;padding:6px 10px;margin:8px 0}
+.hyp.play{cursor:pointer}
+.hyp.play:hover{background:#f5f5f5}
+.hyp.sel{background:#fffbea}
+.win.pick{box-shadow:inset 0 0 0 2px #fff,0 0 0 2px #363636}
+.chart rect[data-i]{cursor:pointer}
 button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #3273dc;outline-offset:2px}
 </style>
 </head>
@@ -107,9 +120,10 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
         <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
       </div>
       <div class="status" id="now1"></div>
+      <div class="selbox" id="sel1">Click a coloured interval to play it and see its prediction.</div>
       <div class="lanes" id="tl"></div>
       <div class="reports" id="reports"></div>
-      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. Our core emits one report with a whole-clip span (IoU 0.51); HOVER emits the same description with IoU 0.83. Play the video or click on a lane to follow the reports over time. The clip was chosen to illustrate over-reporting.</figcaption>
+      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. Our core emits one report with a whole-clip span (IoU 0.51); HOVER emits the same description with IoU 0.83. Click a coloured interval to play it and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
     </figure>
   </div>
 </section>
@@ -130,7 +144,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
     </figure>
 
     <h3>The core on two test clips</h3>
-    <p>Choose a clip and step through the pipeline. All windows, hypotheses, support counts, verification scores, spans and utilities below are the outputs of our test run. While the video plays, the outlined cell is the window on screen; click a cell to jump to it.</p>
+    <p>Choose a clip and step through the pipeline. All windows, hypotheses, support counts, verification scores, spans and utilities below are the outputs of our test run. While the video plays, the outlined cell is the window on screen. Click a window to play that interval, or click a hypothesis to play the windows that support it.</p>
     <div class="tabs" role="group" aria-label="Clip">
       <button data-clip="bus" aria-pressed="true">Wreckfest (InternVL2.5-8B)</button>
       <button data-clip="sky" aria-pressed="false">Skyrim (Qwen2.5-VL-7B)</button>
@@ -138,6 +152,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
     <video id="vid2" muted playsinline controls preload="metadata" style="width:100%;max-width:720px;display:block;margin:0 auto;background:#000"></video>
     <div class="windows" id="wins"></div>
     <div class="wl" id="wlab"></div>
+    <div class="selbox" id="sel2">Click a window to play those two seconds and see what the model reported there.</div>
     <div class="tabs" role="group" aria-label="Step">
       <button data-step="0" aria-pressed="true">1. Describe windows</button>
       <button data-step="1" aria-pressed="false">2. Resolve events</button>
@@ -224,18 +239,33 @@ const SYS={
 };
 let sys='gli';
 const vid1=document.getElementById('vid1');
-function seek(v,t){try{v.currentTime=t}catch(e){}}
+function seek(v,t){v._own=true;try{v.currentTime=t}catch(e){}}
+/* play a list of [start,end] intervals and stop at the end of the last one */
+function playSegs(v,segs){v._segs=segs.map(x=>x.slice());v._i=0;seek(v,segs[0][0]);const p=v.play();if(p)p.catch(()=>{})}
+function segWatch(v){if(!v._segs)return;const b=v._segs[v._i][1];if(v.currentTime>=b-0.04){v._i++;if(v._i<v._segs.length)seek(v,v._segs[v._i][0]);else{v.pause();v._segs=null}}}
+function guard(v){v.addEventListener('seeking',()=>{if(!v._own)v._segs=null});v.addEventListener('seeked',()=>{v._own=false})}
+const fmt=x=>(Math.abs(x-48.67)<.01?'48.7':Math.abs(x-23.62)<.01?'23.6':(+x.toFixed(1)).toString());
 const inSp=(t,sp)=>sp.some(s=>t>=s[0]&&t<=s[1]);
-function lane(lab,spans,color,val,faded){
-  return `<div class="lane"><span class="l">${lab}</span><div class="track" title="Click to jump"><div class="gtb" style="left:${pct(GT[0])};width:${pct(GT[1]-GT[0])}"></div>${spans.map(s=>`<div class="seg${faded?' faded':''}" style="left:${pct(s[0])};width:${pct(s[1]-s[0])};background:${color}"></div>`).join('')}<div class="ph"></div></div><span class="v">${val}</span></div>`;
+let selLane=null,selSpan=null;
+function lane(lab,spans,color,val,faded,id){
+  return `<div class="lane"><span class="l">${lab}</span><div class="track"><div class="gtb" style="left:${pct(GT[0])};width:${pct(GT[1]-GT[0])}"></div>${spans.map((s,j)=>`<div class="seg${faded?' faded':''}${selLane===id&&(selSpan===j||selSpan===null)?' sel':''}" data-lane="${id}" data-j="${j}" title="${lab}: ${fmt(s[0])}&ndash;${fmt(s[1])} s, click to play" style="left:${pct(s[0])};width:${pct(s[1]-s[0])};background:${color}"></div>`).join('')}<div class="ph"></div></div><span class="v">${val}</span></div>`;
+}
+function laneById(id){if(id==='gt')return{sys:null,L:{lab:'Ground truth',spans:[GT],iou:null,txt:'The players\' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.'}};const [k,j]=id.split(':');return{sys:k,L:SYS[k].lanes[+j]}}
+function selectInterval(id,j){
+  const {sys:k,L}=laneById(id);
+  if(k&&k!==sys){sys=k;document.querySelectorAll('[data-sys]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.sys===k))}
+  selLane=id;selSpan=j;drawTL();
+  const segs=j===null?L.spans:[L.spans[j]];
+  document.getElementById('sel1').innerHTML=`<b>${L.lab}</b>, ${segs.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(' and ')}${L.iou!=null?' (IoU '+L.iou.toFixed(2)+')':''}: ${L.txt}`;
+  playSegs(vid1,segs);
 }
 function drawTL(){
-  let h=lane('Ground truth',[GT],C.gt,'16&ndash;41 s',false);
-  for(const k of ['gli','hov','core']) for(const L of SYS[k].lanes) h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys);
+  let h=lane('Ground truth',[GT],C.gt,'16&ndash;41 s',false,'gt');
+  for(const k of ['gli','hov','core']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
   h+=`<div class="axis"><span></span><div class="ticks">${[0,10,20,30,40].map(t=>`<span style="left:${pct(t)}">${t} s</span>`).join('')}</div><span></span></div>`;
   document.getElementById('tl').innerHTML=h;
-  document.getElementById('reports').innerHTML=`<div><span class="who">Ground truth (16&ndash;41 s):</span> The players' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.</div>`+
-    SYS[sys].lanes.map(L=>`<div><span class="who">${L.lab} (${L.spans.map(s=>s[0].toFixed(0)+'&ndash;'+(s[1]===D?'48.7':s[1].toFixed(0))+' s').join(', ')}):</span> ${L.txt}</div>`).join('');
+  document.getElementById('reports').innerHTML=`<div data-lane="gt" class="${selLane==='gt'?'sel':''}" title="Click to play"><span class="who">Ground truth (16&ndash;41 s):</span> The players' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.</div>`+
+    SYS[sys].lanes.map((L,j)=>`<div data-lane="${sys}:${j}" class="${selLane===sys+':'+j?'sel':''}" title="Click to play all of its intervals"><span class="who">${L.lab} (${L.spans.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(', ')}):</span> ${L.txt}</div>`).join('');
   tick1();
 }
 function tick1(){
@@ -244,10 +274,12 @@ function tick1(){
   const on=SYS[sys].lanes.filter(L=>inSp(t,L.spans)).map(L=>L.lab);
   document.getElementById('now1').innerHTML=`<b>${t.toFixed(1)} s</b> &middot; ${inSp(t,[GT])?'<span class="bad">glitch in progress</span>':'no glitch at this moment'} &middot; ${on.length?on.join(', ')+' cover'+(on.length===1?'s':'')+' this moment':'no report of this method covers this moment'}`;
 }
-let r1=0;function loop1(){tick1();if(!vid1.paused&&!vid1.ended)r1=requestAnimationFrame(loop1)}
+let r1=0;function loop1(){segWatch(vid1);tick1();if(!vid1.paused&&!vid1.ended)r1=requestAnimationFrame(loop1)}
 vid1.addEventListener('play',()=>{cancelAnimationFrame(r1);loop1()});
 ['seeked','timeupdate','loadedmetadata','pause'].forEach(e=>vid1.addEventListener(e,tick1));
-document.getElementById('tl').addEventListener('click',e=>{const tr=e.target.closest('.track');if(!tr)return;const r=tr.getBoundingClientRect();seek(vid1,Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*D)});
+vid1.addEventListener('timeupdate',()=>segWatch(vid1));guard(vid1);
+document.getElementById('tl').addEventListener('click',e=>{const sg=e.target.closest('.seg');if(sg){selectInterval(sg.dataset.lane,+sg.dataset.j);return}const tr=e.target.closest('.track');if(!tr)return;const r=tr.getBoundingClientRect();seek(vid1,Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*D)});
+document.getElementById('reports').addEventListener('click',e=>{const d=e.target.closest('[data-lane]');if(d)selectInterval(d.dataset.lane,null)});
 document.querySelectorAll('[data-sys]').forEach(b=>b.addEventListener('click',()=>{sys=b.dataset.sys;document.querySelectorAll('[data-sys]').forEach(x=>x.setAttribute('aria-pressed',x===b));drawTL()}));
 drawTL();
 
@@ -281,16 +313,38 @@ const wt=(c,i)=>`${i*2}&ndash;${Math.min(c.D,i*2+2).toFixed(i*2+2>c.D?1:0)} s`;
 const hypOf=(c,i)=>c.hyps.findIndex(h=>h.m.includes(i));
 function buildClip(){
   const c=CL[clip];
+  vid2._segs=null;document.getElementById('sel2').innerHTML='Click a window to play those two seconds and see what the model reported there.';
   vid2.pause();vid2.poster=c.poster;vid2.src=c.video;
   wins.style.gridTemplateColumns=`repeat(${c.NW},minmax(0,1fr))`;
   wins.innerHTML=[...Array(c.NW)].map((_,i)=>`<div class="win" title="Window ${i+1}"></div>`).join('');
   document.getElementById('wlab').innerHTML=`<span>0 s</span><span>${c.NW} windows of 2 s</span><span>${c.D.toFixed(1)} s</span>`;
 }
 function tick2(){const c=CL[clip],k=Math.min(c.NW-1,Math.floor((vid2.currentTime||0)/2));[...wins.children].forEach((w,i)=>w.classList.toggle('cur',i===k&&(vid2.currentTime>0||!vid2.paused)))}
-let r2=0;function loop2(){tick2();if(!vid2.paused&&!vid2.ended)r2=requestAnimationFrame(loop2)}
+let r2=0;function loop2(){segWatch(vid2);tick2();if(!vid2.paused&&!vid2.ended)r2=requestAnimationFrame(loop2)}
 vid2.addEventListener('play',()=>{cancelAnimationFrame(r2);loop2()});
 ['seeked','timeupdate','pause'].forEach(e=>vid2.addEventListener(e,tick2));
-wins.addEventListener('click',e=>{const w=e.target.closest('.win');if(!w)return;seek(vid2,[...wins.children].indexOf(w)*2+0.05)});
+vid2.addEventListener('timeupdate',()=>segWatch(vid2));guard(vid2);
+function playWin(i){
+  const c=CL[clip],a=i*2,b=Math.min(c.D,i*2+2),h=hypOf(c,i);
+  [...wins.children].forEach((w,k)=>w.classList.toggle('pick',k===i));
+  let msg;
+  if(h<0)msg='the model reported <b>no glitch</b> in this window.';
+  else if(cur===0)msg='the model <b>reported a glitch</b> in this window.';
+  else msg=`this window proposed <b>hypothesis ${h+1}</b>${h===0?' (the reported one)':''}: ${c.hyps[h].txt}`;
+  document.getElementById('sel2').innerHTML=`<b>Window ${i+1}</b>, ${fmt(a)}&ndash;${fmt(b)} s: ${msg}`;
+  playSegs(vid2,[[a,b]]);
+}
+function playHyp(k){
+  const c=CL[clip],m=c.hyps[k].m.slice().sort((x,y)=>x-y),segs=[];
+  for(const i of m){const a=i*2,b=Math.min(c.D,i*2+2);if(segs.length&&Math.abs(segs[segs.length-1][1]-a)<1e-6)segs[segs.length-1][1]=b;else segs.push([a,b])}
+  [...wins.children].forEach((w,i)=>w.classList.toggle('pick',m.includes(i)));
+  document.querySelectorAll('#stage .hyp.play').forEach((d,j)=>d.classList.toggle('sel',j===k));
+  document.getElementById('sel2').innerHTML=`<b>Hypothesis ${k+1}</b>: playing its ${m.length} supporting window${m.length>1?'s':''} (${segs.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(', ')}).`;
+  playSegs(vid2,segs);
+}
+wins.addEventListener('click',e=>{const w=e.target.closest('.win');if(w)playWin([...wins.children].indexOf(w))});
+document.getElementById('stage').addEventListener('click',e=>{const d=e.target.closest('.hyp.play');if(d)playHyp(+d.dataset.k)});
+document.getElementById('prof').addEventListener('click',e=>{const r=e.target.closest('rect[data-i]');if(r)playWin(+r.dataset.i)});
 function profSVG(c){
   const W=720,H=180,l=40,r=10,t=10,b=34,pw=W-l-r,ph=H-t-b;
   const lo=Math.min(-5,...c.prof),hi=Math.max(7,...c.prof);
@@ -298,14 +352,14 @@ function profSVG(c){
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Verification scores per window">`;
   s+=`<rect x="${x(c.gt[0])}" y="${t}" width="${x(c.gt[1])-x(c.gt[0])}" height="${ph}" fill="${C.gt}" opacity=".08"/>`;
   for(let v=Math.ceil(lo/2)*2;v<=hi;v+=2)s+=`<line x1="${l}" x2="${W-r}" y1="${y(v)}" y2="${y(v)}" stroke="#e5e5e5"/><text x="${l-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
-  c.prof.forEach((p,i)=>{const y0=y(Math.max(p,0)),h=Math.abs(y(p)-y(0));s+=`<rect x="${l+i*bw+1}" y="${y0}" width="${bw-2}" height="${Math.max(h,1)}" fill="${p>c.tau?C.hov:C.grey}"><title>Window ${i+1}: ${p.toFixed(2)}</title></rect>`});
+  c.prof.forEach((p,i)=>{const y0=y(Math.max(p,0)),h=Math.abs(y(p)-y(0));s+=`<rect x="${l+i*bw+1}" y="${y0}" width="${bw-2}" height="${Math.max(h,1)}" fill="${p>c.tau?C.hov:C.grey}" data-i="${i}"><title>Window ${i+1}: ${p.toFixed(2)}, click to play</title></rect>`});
   s+=`<line x1="${l}" x2="${W-r}" y1="${y(0)}" y2="${y(0)}" stroke="#363636"/>`;
   s+=`<line x1="${l}" x2="${W-r}" y1="${y(c.tau)}" y2="${y(c.tau)}" stroke="#363636" stroke-dasharray="5 4"/><text x="${W-r}" y="${y(c.tau)-5}" text-anchor="end">&#964; = ${c.tau.toFixed(1)}</text>`;
   s+=`<rect x="${x(c.span[0])}" y="${t+ph+6}" width="${x(c.span[1])-x(c.span[0])}" height="5" fill="${C.hov}"/>`;
   s+=`<text x="${l}" y="${H-2}">Bars: calibrated log-odds of hypothesis 1 per window. Shaded: ground truth. Green line: span from S.</text></svg>`;
   return s;
 }
-const hc=(h,k)=>`<div class="hyp" style="border-color:${HC[k]}"><small>Hypothesis ${k+1}: support ${h.m.length} (windows ${h.m.map(i=>i+1).join(', ')}), entity &ldquo;${h.ent}&rdquo;, type &ldquo;${h.type}&rdquo;</small>${h.txt}</div>`;
+const hc=(h,k)=>`<div class="hyp play" data-k="${k}" title="Click to play its supporting windows" style="border-color:${HC[k]}"><small>Hypothesis ${k+1}: support ${h.m.length} (windows ${h.m.map(i=>i+1).join(', ')}), entity &ldquo;${h.ent}&rdquo;, type &ldquo;${h.type}&rdquo;. Click to play its windows.</small>${h.txt}</div>`;
 const ST=[
  c=>{const n=c.hyps.reduce((a,h)=>a+h.m.length,0);return `<h4>Stage H: describe every window</h4><p>The VLM describes each two-second window independently and returns whether it shows a glitch, a description, the affected entity and a type. In this clip ${n} of ${c.NW} windows report a glitch (dark cells).</p>`},
  c=>`<h4>Stage H: resolve observations into events</h4><p>${c.hyps.length>1?`The ${c.hyps.reduce((a,h)=>a+h.m.length,0)} positive windows are merged into ${c.hyps.length} entity-anchored hypotheses, ranked by support, the number of windows that proposed them. Hypothesis 2 describes the same bus again; reporting it as well would add a second report for a single glitch.`:'The single positive window gives one hypothesis with support 1.'}</p>${c.hyps.map(hc).join('')}`,
