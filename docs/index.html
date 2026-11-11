@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="description" content="HOVER: support-ranked hypotheses and utility-aware emission for open-ended video game glitch detection.">
+<meta name="description" content="Report Once with HOVER: support-ranked hypotheses and utility-aware emission for open-ended video game glitch detection.">
 <title>HOVER</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
@@ -120,7 +120,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 <body>
 
 <div class="container">
-  <h1 class="title">HOVER: Support-Ranked Hypotheses and Utility-Aware Emission for Open-Ended Video Game Glitch Detection</h1>
+  <h1 class="title">Report Once with HOVER: Support-Ranked Hypotheses and Utility-Aware Emission for Open-Ended Video Game Glitch Detection</h1>
   <p class="authors">Anonymous Authors</p>
   <p class="venue">CVPR 2027 submission (under review)</p>
   <div class="links">
@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 <section class="section gray" id="abstract">
   <div class="container narrow">
     <h2>Abstract</h2>
-    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We present HOVER, a pipeline for frozen vision-language models built around this property. It describes every two-second window, resolves the observations into support-ranked, entity-anchored hypotheses (H), verifies each hypothesis on every window with calibrated yes/no log-odds (V), finds its span with an exact dynamic program (S), and emits only the hypotheses whose predicted contribution to the score clears a threshold derived in closed form (U); no model weights are updated. On five open backbones HOVER beats tracker-clean same-stack re-runs of the reference agent by 2.59&ndash;13.63 points of F1&times;IoU, stays significantly ahead when the agent's output is cut to its published report rate, and needs 4.5&ndash;9.5&times; less time. Ablations isolate where this comes from: without event resolution F1&times;IoU drops by up to 10.4 points and without utility-aware emission by up to 11.2, both significant on four backbones, while segmentation improves localisation where glitches are short. A closed-form emission rule explains why few, well-supported reports win under this metric, and cheap controls separate perception from the metric's priors: no method yet tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge, whereas blinded human raters rate HOVER's descriptions far above it. We will release the pipeline, the controls and all outputs.</p>
+    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We show that under this metric what a system decides to report matters as much as what it perceives. An exact factorisation of F1&times;IoU separates description from grounding, and a closed-form emission rule shows that, on this benchmark, one report per clip is close to optimal. Built on this, HOVER lets a frozen vision-language model describe every two-second window, resolves the observations into support-ranked, entity-anchored events, verifies and segments them, and emits only events whose predicted utility clears the threshold the rule prescribes. On five open backbones HOVER significantly beats tracker-clean same-stack re-runs of the reference agent by 2.59&ndash;13.63 points of F1&times;IoU, stays ahead when the agent's output is cut to its published report rate, and needs 4.5&ndash;9.5&times; less time. Its training-free core, which reports the best-supported event once with a whole-clip span, already gains 2.70&ndash;13.54 points, which locates the gain in event resolution and the emission decision; the learned emission threshold lands where the rule predicts, and segmentation helps where glitches are short. Cheap controls separate perception from the metric's priors: whole-clip spans are nearly as good as any span, no method tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge. Blinded raters do not share this prior: from text they rate the descriptions of HOVER and its core far above that sentence, and watching the clips they rate the core's reports above the agent's. We will release the code, the controls and all outputs as a cheap reporting standard.</p>
   </div>
 </section>
 
@@ -142,6 +142,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
       <video id="vid1" src="videos/skyrim.mp4" poster="videos/skyrim.jpg" muted playsinline controls preload="metadata"></video>
       <div class="tabs" role="group" aria-label="Method">
         <button data-sys="gli" aria-pressed="true">GliDe (re-run)</button>
+        <button data-sys="core" aria-pressed="false">Core (ours, training-free)</button>
         <button data-sys="hov" aria-pressed="false">HOVER (ours)</button>
       </div>
       <div class="status" id="now1"></div>
@@ -149,11 +150,12 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
       <div class="lanes" id="tl"></div>
       <div class="legend" id="leg1"></div>
       <div class="reports" id="reports"></div>
-      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. HOVER resolves the window observations into one event, emits it once, and its segmentation stage localises the launch at 16&ndash;46 s (IoU 0.83). Click a point on a coloured interval to play from there to the end of the interval and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
+      <figcaption><b>Figure 1.</b> One event, four reports. A <i>Skyrim</i> test clip (Qwen2.5-VL-7B): the players' carriage is launched into the air and flips (16&ndash;41 s, red dashed lines). Our re-run of the GliDe agent emits four reports; at most one can be matched, and the others only add to the denominator of F1&times;IoU. HOVER's training-free core emits one report on the launch with a whole-clip span (IoU 0.51); HOVER emits the same description and its segmentation stage localises the launch at 16&ndash;46 s (IoU 0.83). Click a point on a coloured interval to play from there to the end of the interval and read its prediction, or click a report to play all of its intervals. The clip was chosen to illustrate over-reporting.</figcaption>
     </figure>
     <aside id="glance">
     <h2>HOVER at a glance: what each stage contributes</h2>
     <p class="justify">The VideoGlitchBench score multiplies how good the descriptions are by how well their spans overlap the glitch, and it charges every report, matched or not. Each stage of HOVER handles one part of that score: <b>H</b> decides <i>what</i> the candidate events are, <b>V</b> and <b>S</b> decide <i>when</i> they happen, and <b>U</b> decides <i>how many</i> to report.</p>
+    <p class="justify"><b>The training-free core.</b> H followed by reporting the best-supported event once with a whole-clip span. It has no fitted parameter and shows where HOVER's gain comes from: event resolution and the emission decision.</p>
     <p class="justify"><b>H, hypotheses with support.</b> The VLM describes every two-second window, and observations of the same entity and kind of anomaly are merged into one event, ranked by how many windows proposed it independently. One glitch seen ten times becomes one strong candidate instead of ten reports.</p>
     <p class="justify"><b>V, calibrated verification.</b> For each event and window, V reads the probability of &ldquo;yes&rdquo; to a question about <i>this</i> glitch on <i>this</i> entity, minus the same question on a grey image, so every event gets a comparable score per window.</p>
     <p class="justify"><b>S, exact segmentation.</b> A dynamic program finds the optimal span for those scores. The development split chooses between window, frame and whole-clip spans per backbone, so S localises when the evidence supports it and falls back to the whole clip otherwise.</p>
@@ -161,10 +163,11 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
     <div class="tw cmp"><table>
       <thead><tr><th>Stage</th><th>Decides</th><th>Evidence on the test split</th></tr></thead>
       <tbody>
+        <tr><td>Core</td><td>H + report once</td><td>+2.70 to +13.54 over tracker-clean agent re-runs (significant on all 5)</td></tr>
         <tr><td>H</td><td>what to report</td><td>without it, F1&times;IoU &minus;4.8 to &minus;10.4 (significant on 4 of 5 backbones)</td></tr>
-        <tr><td>V</td><td>evidence per window</td><td>feeds S; removing it alone changes F1&times;IoU by &le;0.92, not significant</td></tr>
+        <tr><td>V</td><td>evidence per window</td><td>supplies the window scores from which S cuts spans</td></tr>
         <tr><td>S</td><td>when it happens</td><td>+2.47 on short glitches (Qwen2.5-VL-7B, p=0.0015); IoU 0.83 in Figure 1</td></tr>
-        <tr><td>U</td><td>how many reports</td><td>without it, F1&times;IoU &minus;5.2 to &minus;11.2 (significant on 4 of 5)</td></tr>
+        <tr><td>U</td><td>how many reports</td><td>without it, F1&times;IoU &minus;5.2 to &minus;11.2 (significant on 4 of 5); learned threshold t* &asymp; F*/2, as Proposition 1 predicts</td></tr>
       </tbody>
     </table></div>
     </aside>
@@ -218,26 +221,39 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
     <h2>Results</h2>
     <p>Test split: 383 clips from 12 games that were not used for tuning. F1&times;IoU in %, judged by Llama-3.1-8B-Instruct. &Delta;: difference to the GliDe re-run with exact game-level permutation p-values. <sup>&dagger;</sup>Significant after Holm correction over the family of ten comparisons with the re-run.</p>
     <div class="tw"><table id="tres"></table></div>
-    <p style="margin-top:14px">Against re-runs without tracker memory failures, HOVER's gain is significant on all five backbones (+2.59 to +13.63 points). Cut to the published agent's report rate, the re-run still trails HOVER by 2.51 to 9.84 points, significantly on all four backbones where anything is cut. The gain holds under rating&times;IoU matching and with a second, stricter judge (Qwen2.5-72B-Instruct-AWQ).</p>
+    <p style="margin-top:14px">Against re-runs without tracker memory failures, all ten comparisons are significant: HOVER +2.59 to +13.63 points, its core +2.70 to +13.54. Cut to the published agent's report rate, the re-run still trails HOVER by 2.51 to 9.84 points and the core by 2.54 to 10.58, significantly on all four backbones where anything is cut. HOVER stays within 0.74 points of its core on every backbone. The gains hold under rating&times;IoU matching and with a second, stricter judge (Qwen2.5-72B-Instruct-AWQ).</p>
 
     <h3>Ablation: what each stage contributes</h3>
-    <p>Change in F1&times;IoU when one component is disabled, each variant re-tuned on the development split. <sup>&dagger;</sup>Significant after Holm correction over the four variants. A fixed rule that always emits the best-supported hypothesis with a whole-clip span performs on par with HOVER (within 0.74 points on every backbone, none significant; supplement): U learns this near-optimal one-report policy from the metric instead of having it fixed by hand.</p>
+    <p>Change in F1&times;IoU when one component is disabled, each variant re-tuned on the development split. <sup>&dagger;</sup>Significant after Holm correction over the four variants. Event resolution (H) and utility-aware emission (U) carry the result; the learned selector performs on par with always emitting the best-supported hypothesis, i.e. U recovers from data the report-once rule that the core fixes by hand.</p>
     <div class="tw"><table id="tabl"></table></div>
 
+    <h3>The learned threshold follows Proposition 1</h3>
+    <p>Proposition 1 says a report pays only if its utility exceeds half of the attainable score F*. HOVER's U stage fits its threshold t* on out-of-fold development predictions without being told this; on all five backbones it lands at 0.43&ndash;0.56 F* (development split, main run).</p>
+    <div class="chart" id="chP" style="max-width:520px;margin:0 auto"></div>
+
     <h3>Inference time</h3>
-    <p>All methods timed back to back on the same vLLM server per backbone, 20 test clips from all 12 games, from raw video to the final report. HOVER is faster on 19&ndash;20 of the 20 clips; the agent runs a planner, three tools and a debate on every flagged window, with 52&ndash;142 VLM calls per clip.</p>
+    <p>All methods timed back to back on the same vLLM server per backbone, 20 test clips from all 12 games, from raw video to the final report. HOVER and its core are faster on 19&ndash;20 of the 20 clips; the core makes 21&ndash;23 VLM calls per clip, while the agent runs a planner, three tools and a debate on every flagged window, with 52&ndash;142 VLM calls per clip.</p>
     <div class="chart" id="chT"></div>
     <div class="tw"><table id="ttime"></table></div>
 
     <h3>Human evaluation</h3>
-    <p>Two blinded annotators rated 140 matched test pairs (prediction against the ground-truth description) from 0 to 5 with the benchmark's rubric. They rate HOVER's descriptions far above a fixed TF-IDF sentence that never sees the video, while neither LLM judge separates the two. Against the GliDe re-run the difference is not significant.</p>
+    <p><b>From text.</b> Two blinded annotators rated 140 matched test pairs (prediction against the ground-truth description) from 0 to 5 with the benchmark's rubric. They rate the descriptions of HOVER and its core far above a fixed TF-IDF sentence that never sees the video, while neither LLM judge separates them. From text alone the difference to the GliDe re-run is not significant (core +0.50, p=0.158), which is why we also watched the clips.</p>
     <div class="tw"><table>
-      <thead><tr><th>Mean rating (0&ndash;5)</th><th>HOVER (ours)</th><th>GliDe (re-run)</th><th>Fixed sentence</th><th>HOVER &minus; fixed sentence, p</th></tr></thead>
+      <thead><tr><th>Mean rating (0&ndash;5)</th><th>HOVER (ours)</th><th>Core (ours)</th><th>GliDe (re-run)</th><th>Fixed sentence</th><th>p, ours vs. sentence</th></tr></thead>
       <tbody>
-        <tr><td>Annotator A</td><td><b>2.60</b></td><td>2.14</td><td>1.20</td><td>+1.40, &lt;0.001</td></tr>
-        <tr><td>Annotator B</td><td><b>2.63</b></td><td>2.40</td><td>1.11</td><td>+1.51, &lt;0.001</td></tr>
-        <tr><td>Llama-3.1-8B judge</td><td>3.34</td><td>3.54</td><td>3.00</td><td>+0.34, 0.329</td></tr>
-        <tr><td>Qwen2.5-72B judge</td><td>1.63</td><td>1.46</td><td>1.31</td><td>+0.31, 0.356</td></tr>
+        <tr><td>Annotator A</td><td>2.60</td><td><b>2.80</b></td><td>2.14</td><td>1.20</td><td>&lt;0.001</td></tr>
+        <tr><td>Annotator B</td><td>2.63</td><td><b>2.74</b></td><td>2.40</td><td>1.11</td><td>&lt;0.001</td></tr>
+        <tr><td>Llama-3.1-8B judge</td><td>3.34</td><td>3.40</td><td>3.54</td><td>3.00</td><td>&ge;0.249</td></tr>
+        <tr><td>Qwen2.5-72B judge</td><td>1.63</td><td>1.74</td><td>1.46</td><td>1.31</td><td>&ge;0.210</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:14px"><b>Watching the clips.</b> Three raters watched 60 test clips and scored all 150 reports of the core and the GliDe re-run from 0 to 5 against the video, without knowing which method produced them. The main judge only reads the reports against the ground-truth text.</p>
+    <div class="tw"><table>
+      <thead><tr><th></th><th>Core (ours)</th><th>GliDe (re-run)</th><th>Difference per clip [95% CI]</th><th>p</th></tr></thead>
+      <tbody>
+        <tr><td>Human raters, watching the video</td><td><b>2.83</b></td><td>2.32</td><td>+0.42 [+0.16, +0.71]</td><td>0.004</td></tr>
+        <tr><td>Human raters without the author-rater</td><td colspan="2">&nbsp;</td><td>+0.40</td><td>0.017</td></tr>
+        <tr><td>Llama-3.1-8B judge, ground-truth text</td><td>2.32</td><td>2.27</td><td>&minus;0.05</td><td>0.815</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -246,7 +262,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 <section class="section gray" id="limitations">
   <div class="container narrow">
     <h2>Limitations</h2>
-    <p class="justify">All main scores rely on one open judge, which is more lenient than human raters and rates a generic sentence nearly as high as the systems' descriptions, so results should be read as paired comparisons. With today's weak window evidence (within-video AUC 0.57&ndash;0.64), V and S improve spans rather than F1&times;IoU on most backbones, and a fixed one-report rule performs on par with U on this benchmark. No method we tested separates clips with a glitch from clips without one. Our human checks are small and in-house, the selector gate was lowered once, and our glitch definition was written knowing the benchmark's categories. The study covers one benchmark, twelve test games and five open 3&ndash;8B backbones. One report per clip caps recall at 94.5% of the test glitches.</p>
+    <p class="justify">The main judge is more lenient than human raters and, like the second judge, rates a generic sentence nearly as high as the systems, so results should be read as paired comparisons. Our human checks are small and in-house (140 text pairs; 60 clips watched by three raters of our group, one an author). The core was named after an earlier complete run; HOVER, tuned on the development split only, gains 2.59&ndash;13.63 points over the same tracker-clean re-runs, so the conclusions do not rest on that choice. Our glitch definition was written knowing the benchmark's categories; 61&ndash;72% of the gain remains with GliDe's own categories. The study covers one benchmark, twelve test games and five open 3&ndash;8B backbones, not GliDe's LLaVA-OneVision-7B or proprietary models. One report per clip caps recall at 94.5% on test.</p>
   </div>
 </section>
 
@@ -254,8 +270,8 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
   <div class="container">
     <h2>BibTeX</h2>
 <pre>@inproceedings{anonymous2027hover,
-  title     = {{HOVER}: Support-Ranked Hypotheses and Utility-Aware Emission
-               for Open-Ended Video Game Glitch Detection},
+  title     = {Report Once with {HOVER}: Support-Ranked Hypotheses and
+               Utility-Aware Emission for Open-Ended Video Game Glitch Detection},
   author    = {Anonymous},
   booktitle = {Under review at CVPR},
   year      = {2027}
@@ -277,6 +293,7 @@ const SYS={
   {lab:'GliDe report 2',spans:[[18,25],[28,41]],iou:.80,txt:'A physics glitch where a character is <span class="good">propelled forward with unnatural force</span>, and a knight-like figure is stuck on a wooden structure.'},
   {lab:'GliDe report 3',spans:[[32,33]],iou:.04,txt:'The character #130-135 appears to be floating 2 meters above the wooden platform. (Echoes the example sentence in the agent\'s prompt.)'},
   {lab:'GliDe report 4',spans:[[46,47]],iou:0,txt:'The <span class="bad">Achievement Hunter logo</span> shows inconsistent brightness. (The logo is the outro of the uploaded clip, not game content.)'}]},
+ core:{color:C.core,lanes:[{lab:'Core',spans:[[0,D]],iou:.51,txt:'The character is <span class="good">launched into the air</span> and appears to be defying gravity, which is not typical in the game\'s physics. (Whole-clip span.)'}]},
  hov:{color:C.hov,lanes:[{lab:'HOVER',spans:[[16,46]],iou:.83,txt:'The character is <span class="good">launched into the air</span> and appears to be defying gravity, which is not typical in the game\'s physics.'}]}
 };
 let sys='gli';
@@ -305,10 +322,10 @@ function selectInterval(id,j,t0){
 }
 function drawTL(){
   let h=lane('Ground truth',[GT],C.gt,'16&ndash;41 s',false,'gt');
-  for(const k of ['gli','hov']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
+  for(const k of ['gli','core','hov']) SYS[k].lanes.forEach((L,j)=>{h+=lane(L.lab,L.spans,SYS[k].color,'IoU '+L.iou.toFixed(2),k!==sys,k+':'+j)});
   h+=`<div class="axis"><span></span><div class="ticks">${[0,10,20,30,40].map(t=>`<span style="left:${pct(t)}">${t} s</span>`).join('')}</div><span></span></div>`;
   document.getElementById('tl').innerHTML=h;
-  const nm={gli:'GliDe (re-run)',hov:'HOVER (ours)'};
+  const nm={gli:'GliDe (re-run)',core:'Core (ours)',hov:'HOVER (ours)'};
   document.getElementById('leg1').innerHTML=`<span><i style="background:${SYS[sys].color}"></i>selected method: ${nm[sys]}</span><span><i style="background:#888;opacity:.35"></i>light: other methods (click a tab or interval)</span><span><i style="background:${C.gt}"></i>ground-truth glitch</span><span><i class="gtl"></i>ground-truth boundaries</span><span><i class="ln" style="background:#222"></i>current video time</span>`;
   document.getElementById('reports').innerHTML=`<div data-lane="gt" class="${selLane==='gt'?'sel':''}" title="Click to play"><span class="who">Ground truth (16&ndash;41 s):</span> The players' carriage is <span class="good">launched into the air</span> and undergoes unnatural flips.</div>`+
     SYS[sys].lanes.map((L,j)=>`<div data-lane="${sys}:${j}" class="${selLane===sys+':'+j?'sel':''}" title="Click to play all of its intervals"><span class="who">${L.lab} (${L.spans.map(s=>fmt(s[0])+'&ndash;'+fmt(s[1])+' s').join(', ')}):</span> ${L.txt}</div>`).join('');
@@ -332,7 +349,7 @@ drawTL();
 /* metric example */
 function drawCalc(){
   const r=+document.getElementById('rr').value;document.getElementById('rv').textContent=r;
-  const rows=[['GliDe (re-run)',C.gli,4,.80],['HOVER (ours)',C.hov,1,.83]];
+  const rows=[['GliDe (re-run)',C.gli,4,.80],['Core (ours)',C.core,1,.51],['HOVER (ours)',C.hov,1,.83]];
   const mx=2*5*.83/(5*2); // HOVER at r = 5, the largest value the slider can produce
   document.getElementById('calc').innerHTML=rows.map(([n,c,N,iou])=>{const s=2*r*iou/(5*(N+1));return `<div class="ubar"><span>${n}</span><div class="b"><i style="width:${Math.min(100,100*s/mx).toFixed(1)}%;background:${c}"></i></div><span>${(100*s).toFixed(1)}</span></div><div style="font-size:.8rem;color:#7a7a7a;margin:-2px 0 4px 120px">2&middot;${r}&middot;${iou.toFixed(2)} / (5&middot;(${N}+1)), ${N} report${N>1?'s':''}</div>`}).join('');
 }
@@ -410,7 +427,7 @@ const ST=[
  c=>{const n=c.hyps.reduce((a,h)=>a+h.m.length,0);return `<h4>Stage H: describe every window</h4><p>The VLM describes each two-second window independently and returns whether it shows a glitch, a description, the affected entity and a type. In this clip ${n} of ${c.NW} windows report a glitch (dark cells).</p>`},
  c=>`<h4>Stage H: resolve observations into events</h4><p>${c.hyps.length>1?`The ${c.hyps.reduce((a,h)=>a+h.m.length,0)} positive windows are merged into ${c.hyps.length} entity-anchored hypotheses, ranked by support, the number of windows that proposed them. Hypothesis 2 describes the same bus again; reporting it as well would add a second report for a single glitch.`:'The single positive window gives one hypothesis with support 1.'}</p>${c.hyps.map(hc).join('')}`,
  c=>`<h4>V + S: verify the hypothesis and find its span</h4><p><b>V</b> asks a yes/no question about hypothesis 1 on every window and calibrates the answer against a grey image (bars above). <b>S</b> finds the optimal span over these scores, keeping windows above &#964; with a penalty for each change (${c.mode} mode, chosen on the development split): ${c.span[0].toFixed(1)}&ndash;${c.span[1].toFixed(1)} s, IoU ${c.hovIoU.toFixed(2)}. ${clip==='bus'?'Every window is above &#964;, so the span is the whole clip, which already covers the glitch well.':'The span closes in on the launch; a whole-clip span would reach only IoU '+c.coreIoU.toFixed(2)+'.'} Click a bar to play its window.</p>`,
- c=>`<h4>U: emit only what pays</h4><p><b>U</b> predicts each hypothesis' contribution to F1&times;IoU and emits those above the threshold t* = ${c.tstar.toFixed(3)} fitted on the development split (black mark). ${c.hyps.length>1?'Only hypothesis 1 clears it, so the duplicate description of the bus and the weaker car hypothesis are not reported.':'Hypothesis 1 clears it and becomes the report.'}</p>`+
+ c=>`<h4>U: emit only what pays</h4><p><b>U</b> predicts each hypothesis' contribution to F1&times;IoU and emits those above the threshold t* = ${c.tstar.toFixed(3)} fitted on the development split (black mark). ${c.hyps.length>1?'Only hypothesis 1 clears it, so the duplicate description of the bus and the weaker car hypothesis are not reported.':'Hypothesis 1 clears it and becomes the report.'} The training-free core reports the same hypothesis once with a whole-clip span (IoU ${c.coreIoU.toFixed(2)}).</p>`+
    c.hyps.map((h,k)=>`<div class="ubar"><span>Hypothesis ${k+1}: ${h.u>=c.tstar?'emit':'drop'}</span><div class="b"><i style="width:${Math.min(100,100*h.u/.3)}%;background:${HC[k]}"></i><em style="left:${100*c.tstar/.3}%"></em></div><span>${h.u.toFixed(3)}</span></div>`).join('')+
    `<div class="hyp" style="border-color:${C.hov};margin-top:12px"><small>HOVER's report (${c.span[0].toFixed(1)}&ndash;${c.span[1].toFixed(1)} s, IoU ${c.hovIoU.toFixed(2)})</small>${c.hyps[0].txt}</div><div class="hyp" style="border-color:${C.gt}"><small>Ground truth (${c.gt[0]}&ndash;${c.gt[1]} s)</small>${c.gtTxt}</div>`
 ];
@@ -462,8 +479,8 @@ const R=[
  [744,15.45,29.13,'+13.68','<0.001',true,28.39,'+12.94','<0.001',true],
  [901,11.62,24.85,'+13.23','<0.001',true,24.94,'+13.32','<0.001',true]];
 const NH=[374,345,376,373,370];
-document.getElementById('tres').innerHTML=`<thead><tr><th rowspan="2">Backbone</th><th colspan="2">GliDe (re-run)</th><th colspan="4">HOVER (ours)</th></tr><tr><th>reports</th><th>F1&times;IoU</th><th>reports</th><th>F1&times;IoU</th><th>&Delta;</th><th>p</th></tr></thead><tbody>`+
- R.map((r,i)=>`<tr><td>${BB[i]}</td><td>${r[0]}</td><td>${r[1].toFixed(2)}</td><td>${NH[i]}</td><td><b>${r[6].toFixed(2)}</b></td><td>${r[7]}</td><td>${r[8]}${r[9]?'<sup>&dagger;</sup>':''}</td></tr>`).join('')+`</tbody>`;
+document.getElementById('tres').innerHTML=`<thead><tr><th rowspan="2">Backbone</th><th colspan="2">GliDe (re-run)</th><th colspan="4">HOVER (ours)</th><th colspan="3">Core (ours, training-free)</th></tr><tr><th>reports</th><th>F1&times;IoU</th><th>reports</th><th>F1&times;IoU</th><th>&Delta;</th><th>p</th><th>F1&times;IoU</th><th>&Delta;</th><th>p</th></tr></thead><tbody>`+
+ R.map((r,i)=>{const best=Math.max(r[1],r[2],r[6]);const f=v=>v===best?`<b>${v.toFixed(2)}</b>`:v.toFixed(2);return `<tr><td>${BB[i]}</td><td>${r[0]}</td><td>${f(r[1])}</td><td>${NH[i]}</td><td>${f(r[6])}</td><td>${r[7]}</td><td>${r[8]}${r[9]?'<sup>&dagger;</sup>':''}</td><td>${f(r[2])}</td><td>${r[3]}</td><td>${r[4]}${r[5]?'<sup>&dagger;</sup>':''}</td></tr>`}).join('')+`</tbody>`;
 const AB=[['HOVER (full)',[30.70,22.60,27.29,28.39,24.94],null],
  ['w/o contextual calibration (V)',[+0.22,-0.15,-0.19,+0.65,-0.92],[0,0,0,0,0]],
  ['w/o hypothesis verification (V)',[+0.23,-0.15,-0.27,+0.49,-0.13],[0,0,0,0,0]],
@@ -472,19 +489,34 @@ const AB=[['HOVER (full)',[30.70,22.60,27.29,28.39,24.94],null],
 const sg=v=>(v>=0?'+':'&minus;')+Math.abs(v).toFixed(2);
 document.getElementById('tabl').innerHTML=`<thead><tr><th></th>${['Q-3B','Q-7B','I-4B','I-8B','UT-7B'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`+
  AB.map(([n,v,d])=>`<tr><td>${n}</td>${v.map((x,i)=>`<td>${d?sg(x)+(d[i]?'<sup>&dagger;</sup>':''):x.toFixed(2)}</td>`).join('')}</tr>`).join('')+`</tbody>`;
-const T={gli:[154.0,106.6,215.2,261.8,204.4],hov:[29.1,23.5,22.6,32.2,26.4]};
-document.getElementById('ttime').innerHTML=`<thead><tr><th>Backbone</th><th>GliDe (s/clip)</th><th>HOVER (s/clip)</th><th>HOVER speed-up</th></tr></thead><tbody>`+
- BB.map((b,i)=>`<tr><td>${b}</td><td>${T.gli[i].toFixed(1)}</td><td><b>${T.hov[i].toFixed(1)}</b></td><td>${(T.gli[i]/T.hov[i]).toFixed(1)}&times;</td></tr>`).join('')+`</tbody>`;
+const T={gli:[154.0,106.6,215.2,261.8,204.4],core:[23.1,22.2,19.6,23.1,22.0],hov:[29.1,23.5,22.6,32.2,26.4]};
+document.getElementById('ttime').innerHTML=`<thead><tr><th>Backbone</th><th>GliDe (s/clip)</th><th>Core (s/clip)</th><th>HOVER (s/clip)</th><th>Core speed-up</th><th>HOVER speed-up</th></tr></thead><tbody>`+
+ BB.map((b,i)=>`<tr><td>${b}</td><td>${T.gli[i].toFixed(1)}</td><td>${T.core[i].toFixed(1)}</td><td>${T.hov[i].toFixed(1)}</td><td>${(T.gli[i]/T.core[i]).toFixed(1)}&times;</td><td>${(T.gli[i]/T.hov[i]).toFixed(1)}&times;</td></tr>`).join('')+`</tbody>`;
 (function(){
-  const W=720,H=230,l=44,r=10,t=26,b=30,pw=W-l-r,ph=H-t-b,max=280,gw=pw/5,bw=22,keys=[['gli','GliDe (re-run)'],['hov','HOVER (ours)']];
+  const W=720,H=230,l=44,r=10,t=26,b=30,pw=W-l-r,ph=H-t-b,max=280,gw=pw/5,bw=22,keys=[['gli','GliDe (re-run)'],['core','Core (ours)'],['hov','HOVER (ours)']];
   const y=v=>t+ph-ph*v/max;
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Seconds per clip">`;
   for(let v=0;v<=max;v+=50)s+=`<line x1="${l}" x2="${W-r}" y1="${y(v)}" y2="${y(v)}" stroke="#e5e5e5"/><text x="${l-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
   s+=`<text x="${l}" y="12">seconds per clip</text>`;
-  keys.forEach(([k,n],j)=>{s+=`<rect x="${W-r-230+j*112}" y="3" width="10" height="10" fill="${C[k]}"/><text x="${W-r-216+j*112}" y="12">${n}</text>`});
-  BB.forEach((bb,i)=>{const x0=l+i*gw+(gw-2*bw-2)/2;keys.forEach(([k],j)=>{const v=T[k][i];s+=`<rect x="${x0+j*(bw+2)}" y="${y(v)}" width="${bw}" height="${t+ph-y(v)}" fill="${C[k]}"><title>${bb}: ${v} s</title></rect>`});s+=`<text x="${l+i*gw+gw/2}" y="${H-10}" text-anchor="middle">${bb}</text>`});
+  keys.forEach(([k,n],j)=>{s+=`<rect x="${W-r-330+j*112}" y="3" width="10" height="10" fill="${C[k]}"/><text x="${W-r-316+j*112}" y="12">${n}</text>`});
+  BB.forEach((bb,i)=>{const x0=l+i*gw+(gw-3*bw-4)/2;keys.forEach(([k],j)=>{const v=T[k][i];s+=`<rect x="${x0+j*(bw+2)}" y="${y(v)}" width="${bw}" height="${t+ph-y(v)}" fill="${C[k]}"><title>${bb}: ${v} s</title></rect>`});s+=`<text x="${l+i*gw+gw/2}" y="${H-10}" text-anchor="middle">${bb}</text>`});
   s+=`<line x1="${l}" x2="${W-r}" y1="${t+ph}" y2="${t+ph}" stroke="#363636"/></svg>`;
   document.getElementById('chT').innerHTML=s;
+})();
+/* Prop. 1: fitted threshold t* against attainable development score F* (supplement selector table) */
+(function(){
+  const P=[['Q-3B',29.15,16.3],['Q-7B',25.13,13.3],['I-4B',24.44,13.5],['I-8B†',14.36,8.0],['UT-7B',23.39,10.1]];
+  const W=520,H=300,l=46,r=14,t=14,b=44,pw=W-l-r,ph=H-t-b,mx=35,my=20;
+  const x=v=>l+pw*v/mx,y=v=>t+ph-ph*v/my;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Fitted threshold against attainable score">`;
+  for(let v=0;v<=my;v+=5)s+=`<line x1="${l}" x2="${W-r}" y1="${y(v)}" y2="${y(v)}" stroke="#e5e5e5"/><text x="${l-6}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+  for(let v=0;v<=mx;v+=5)s+=`<text x="${x(v)}" y="${t+ph+16}" text-anchor="middle">${v}</text>`;
+  s+=`<polygon points="${x(0)},${y(0)} ${x(mx)},${y(.56*mx)} ${x(mx)},${y(.43*mx)}" fill="#0072b2" opacity=".08"/>`;
+  s+=`<line x1="${x(0)}" y1="${y(0)}" x2="${x(mx)}" y2="${y(mx/2)}" stroke="#6e7781" stroke-dasharray="5 4"/><text x="${x(31)}" y="${y(15.5)-8}" text-anchor="end">t* = F*/2 (Proposition 1)</text>`;
+  P.forEach(([n,F,tt])=>{s+=`<circle cx="${x(F)}" cy="${y(tt)}" r="5.5" fill="#009e73" stroke="#fff" stroke-width="1.5"><title>${n}: F* = ${F.toFixed(1)}, t* = ${tt.toFixed(1)}, t*/F* = ${(tt/F).toFixed(2)}</title></circle><text x="${x(F)+(n==='UT-7B'||n==='I-4B'?8:-8)}" y="${y(tt)+(n==='UT-7B'||n==='I-4B'?12:-7)}" text-anchor="${n==='UT-7B'||n==='I-4B'?'start':'end'}">${n}</text>`});
+  s+=`<line x1="${l}" x2="${W-r}" y1="${t+ph}" y2="${t+ph}" stroke="#363636"/><line x1="${l}" x2="${l}" y1="${t}" y2="${t+ph}" stroke="#363636"/>`;
+  s+=`<text x="${l+pw/2}" y="${H-6}" text-anchor="middle">attainable development score F* (F1&times;IoU, %)</text><text transform="translate(12,${t+ph/2}) rotate(-90)" text-anchor="middle">fitted threshold t* (%)</text></svg>`;
+  document.getElementById('chP').innerHTML=s+'<p style="font-size:.8rem;color:#7a7a7a;margin-top:4px">Shaded: 0.43&ndash;0.56 F*, the observed range. &dagger;InternVL2.5-8B was tuned on development labels depressed by failed judge requests.</p>';
 })();
 </script>
 </body>
