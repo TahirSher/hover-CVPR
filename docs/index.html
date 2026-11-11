@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="description" content="Report Once with HOVER: support-ranked hypotheses and utility-aware emission for open-ended video game glitch detection.">
+<meta name="description" content="Report Once: support-ranked event resolution and a metric-derived emission rule for open-ended video game glitch detection.">
 <title>HOVER</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
 <style>
@@ -120,7 +120,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 <body>
 
 <div class="container">
-  <h1 class="title">Report Once with HOVER: Support-Ranked Hypotheses and Utility-Aware Emission for Open-Ended Video Game Glitch Detection</h1>
+  <h1 class="title">Report Once: Support-Ranked Event Resolution and a Metric-Derived Emission Rule for Open-Ended Video Game Glitch Detection</h1>
   <p class="authors">Anonymous Authors</p>
   <p class="venue">CVPR 2027 submission (under review)</p>
   <div class="links">
@@ -131,7 +131,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
 <section class="section gray" id="abstract">
   <div class="container narrow">
     <h2>Abstract</h2>
-    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We show that under this metric what a system decides to report matters as much as what it perceives. An exact factorisation of F1&times;IoU separates description from grounding, and a closed-form emission rule shows that, on this benchmark, one report per clip is close to optimal. Built on this, HOVER lets a frozen vision-language model describe every two-second window, resolves the observations into support-ranked, entity-anchored events, verifies and segments them, and emits only events whose predicted utility clears the threshold the rule prescribes. On five open backbones HOVER significantly beats tracker-clean same-stack re-runs of the reference agent by 2.59&ndash;13.63 points of F1&times;IoU, stays ahead when the agent's output is cut to its published report rate, and needs 4.5&ndash;9.5&times; less time. Its training-free core, which reports the best-supported event once with a whole-clip span, already gains 2.70&ndash;13.54 points, which locates the gain in event resolution and the emission decision; the learned emission threshold lands where the rule predicts, and segmentation helps where glitches are short. Cheap controls separate perception from the metric's priors: whole-clip spans are nearly as good as any span, no method tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge. Blinded raters do not share this prior: from text they rate the descriptions of HOVER and its core far above that sentence, and watching the clips they rate the core's reports above the agent's. We will release the code, the controls and all outputs as a cheap reporting standard.</p>
+    <p class="justify">Open-ended glitch detection asks a system to describe every gameplay anomaly in a clip in free text and to localise it in time, and the VideoGlitchBench metric charges every report, matched or not. We show that under this metric what a system decides to report matters as much as what it perceives. An exact factorisation of F1&times;IoU separates description from grounding, and a closed-form emission rule shows that, on this benchmark, one report per clip is close to optimal. Built on this, HOVER lets a frozen vision-language model describe every two-second window, resolves the observations into support-ranked, entity-anchored events, verifies and segments them, and emits only events whose predicted utility clears the threshold the rule prescribes. On five open backbones HOVER significantly beats tracker-clean same-stack re-runs of the reference agent by 2.59&ndash;13.63 points of F1&times;IoU, stays ahead when the agent's output is cut to its published report rate, and needs 4.5&ndash;9.5&times; less time. Its training-free core, which reports the best-supported event once with a whole-clip span, already gains 2.70&ndash;13.54 points, which locates the gain in event resolution and the emission decision; the learned emission threshold lands where the rule predicts, and segmentation helps on the backbone whose spans are short. Cheap controls separate perception from the metric's priors: whole-clip spans are nearly as good as any span, no method tells clips with a glitch from true negatives, and a sentence that never sees the video scores close to the systems under the judge. Blinded raters do not share this prior: from text they rate the descriptions of HOVER and its core far above that sentence, and watching the clips they rate the core's reports above the agent's. We will release the code, the controls and all outputs as a cheap reporting standard.</p>
   </div>
 </section>
 
@@ -166,7 +166,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
         <tr><td>Core</td><td>H + report once</td><td>+2.70 to +13.54 over tracker-clean agent re-runs (significant on all 5)</td></tr>
         <tr><td>H</td><td>what to report</td><td>without it, F1&times;IoU &minus;4.8 to &minus;10.4 (significant on 4 of 5 backbones)</td></tr>
         <tr><td>V</td><td>evidence per window</td><td>supplies the window scores from which S cuts spans</td></tr>
-        <tr><td>S</td><td>when it happens</td><td>+2.47 on short glitches (Qwen2.5-VL-7B, p=0.0015); IoU 0.83 in Figure 1</td></tr>
+        <tr><td>S</td><td>when it happens</td><td>helps on the backbone whose spans are short (Qwen2.5-VL-7B: +2.47 on clips with short glitches, p=0.0015); IoU 0.83 in Figure 1</td></tr>
         <tr><td>U</td><td>how many reports</td><td>without it, F1&times;IoU &minus;5.2 to &minus;11.2 (significant on 4 of 5); learned threshold t* &asymp; F*/2, as Proposition 1 predicts</td></tr>
       </tbody>
     </table></div>
@@ -224,7 +224,7 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
     <p style="margin-top:14px">Against re-runs without tracker memory failures, all ten comparisons are significant: HOVER +2.59 to +13.63 points, its core +2.70 to +13.54. Cut to the published agent's report rate, the re-run still trails HOVER by 2.51 to 9.84 points and the core by 2.54 to 10.58, significantly on all four backbones where anything is cut. HOVER stays within 0.74 points of its core on every backbone. The gains hold under rating&times;IoU matching and with a second, stricter judge (Qwen2.5-72B-Instruct-AWQ).</p>
 
     <h3>Ablation: what each stage contributes</h3>
-    <p>Change in F1&times;IoU when one component is disabled, each variant re-tuned on the development split. <sup>&dagger;</sup>Significant after Holm correction over the four variants. Event resolution (H) and utility-aware emission (U) carry the result; the learned selector performs on par with always emitting the best-supported hypothesis, i.e. U recovers from data the report-once rule that the core fixes by hand.</p>
+    <p>Change in F1&times;IoU when one component is disabled, each variant re-tuned on the development split. <sup>&dagger;</sup>Significant after Holm correction over the four variants. Event resolution (H) and a selective emission decision carry the result. Removing U does not fall back to the core's top-1 rule but emits every verified hypothesis; against the top-1 rule itself, U is on par. Proposition 1 derives the rule, the core applies it by hand and U learns it.</p>
     <div class="tw"><table id="tabl"></table></div>
 
     <h3>The learned threshold follows Proposition 1</h3>
@@ -270,8 +270,8 @@ button:focus-visible,a:focus-visible,.track:focus-visible{outline:2px solid #327
   <div class="container">
     <h2>BibTeX</h2>
 <pre>@inproceedings{anonymous2027hover,
-  title     = {Report Once with {HOVER}: Support-Ranked Hypotheses and
-               Utility-Aware Emission for Open-Ended Video Game Glitch Detection},
+  title     = {Report Once: Support-Ranked Event Resolution and a Metric-Derived
+               Emission Rule for Open-Ended Video Game Glitch Detection},
   author    = {Anonymous},
   booktitle = {Under review at CVPR},
   year      = {2027}
@@ -485,7 +485,7 @@ const AB=[['HOVER (full)',[30.70,22.60,27.29,28.39,24.94],null],
  ['w/o contextual calibration (V)',[+0.22,-0.15,-0.19,+0.65,-0.92],[0,0,0,0,0]],
  ['w/o hypothesis verification (V)',[+0.23,-0.15,-0.27,+0.49,-0.13],[0,0,0,0,0]],
  ['w/o event resolution (H)',[-7.29,-0.14,-6.36,-10.39,-4.81],[1,0,1,1,1]],
- ['w/o utility selection (U)',[-11.16,-0.32,-9.86,-9.77,-5.18],[1,0,1,1,1]]];
+ ['w/o utility selection (U; emit all)',[-11.16,-0.32,-9.86,-9.77,-5.18],[1,0,1,1,1]]];
 const sg=v=>(v>=0?'+':'&minus;')+Math.abs(v).toFixed(2);
 document.getElementById('tabl').innerHTML=`<thead><tr><th></th>${['Q-3B','Q-7B','I-4B','I-8B','UT-7B'].map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`+
  AB.map(([n,v,d])=>`<tr><td>${n}</td>${v.map((x,i)=>`<td>${d?sg(x)+(d[i]?'<sup>&dagger;</sup>':''):x.toFixed(2)}</td>`).join('')}</tr>`).join('')+`</tbody>`;
